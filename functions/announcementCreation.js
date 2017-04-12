@@ -8,16 +8,16 @@
 
         //when the back button is clicked, go back to announcements page    
         $("#back_button").on("click", function(){
-            //window.location.href = "announcements.html";
-            var groups = [];
-            $(".checkboxGroups").each(function(){
-                if($(this).is(':checked')){  
-                    console.log($(this).attr('data-group'));
-                    groups.push($(this).attr('data-group'));
-                }
+            window.location.href = "announcements.html";
+            // var groups = [];
+            // $(".checkboxGroups").each(function(){
+            //     if($(this).is(':checked')){  
+            //         console.log($(this).attr('data-group'));
+            //         groups.push($(this).attr('data-group'));
+            //     }
                
-            });
-            console.log( groups);
+            // });
+            // console.log( groups);
         });
 
         //when the submit button is pressed for the new announcements form,

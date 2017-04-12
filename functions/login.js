@@ -62,43 +62,43 @@
 
 
 
-	//Creates a user with specified email and randomly generated password in firebase,  then sends password reset link to that user's email
-	function createUser(email){
-		var password = generateRandomPassword();
+	// //Creates a user with specified email and randomly generated password in firebase,  then sends password reset link to that user's email
+	// function registerUser(email){
+	// 	var password = generateRandomPassword();
 
-		firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+	// 	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
 
-			console.log("user created");
-			sendPasswordResetEmail(email);
+	// 		console.log("user created");
+	// 		sendPasswordResetEmail(email);
 
-		}, function(error) {
-		  // Handle Errors here.
-		  var errorCode = error.code;
-		  var errorMessage = error.message;
-		  // ...
-		  console.log(errorMessage);
-		});
+	// 	}, function(error) {
+	// 	  // Handle Errors here.
+	// 	  var errorCode = error.code;
+	// 	  var errorMessage = error.message;
+	// 	  // ...
+	// 	  console.log(errorMessage);
+	// 	});
 
-	}
+	// }
 
 
-	//Given an email, sends a password reset link to the user with that email, via Firebase
+	// //Given an email, sends a password reset link to the user with that email, via Firebase
 
-	function sendPasswordResetEmail(email){
-		firebase.auth().sendPasswordResetEmail(email).then(function() {
-			  // Email sent.
-			  console.log("password reset email sent");
-			}, function(error) {
-			  // An error happened.
-			  console.log("failed to send password reset email");
-			});
-	}
+	// function sendPasswordResetEmail(email){
+	// 	firebase.auth().sendPasswordResetEmail(email).then(function() {
+	// 		  // Email sent.
+	// 		  console.log("password reset email sent");
+	// 		}, function(error) {
+	// 		  // An error happened.
+	// 		  console.log("failed to send password reset email");
+	// 		});
+	// }
 
-	//Generates a random password
-	function generateRandomPassword(){
-		var randomstring = Math.random().toString(36).slice(-8);
-		return randomstring;
-	}
+	// //Generates a random password
+	// function generateRandomPassword(){
+	// 	var randomstring = Math.random().toString(36).slice(-8);
+	// 	return randomstring;
+	// }
 
 //------------------------
 	//These functions will be moved to appropriate files in the application later
@@ -125,15 +125,16 @@
 
 	}
 
-	function addUser(firstName, lastName, email, groups, isFaculty, isAdmin, phone, office){
-		var usersRef = firebase.database().ref('users/');
-		var newUserKey = usersRef.push().key;
-		var newUser = new User(newUserKey, firstName, lastName, email, groups, isFaculty, isAdmin, phone, office);
 
-		var updates = {};
-		updates['/users/' + newUserKey] = user;
-		firebase.database().ref().update(updates);
-	}
+	// function addUser(firstName, lastName, email, groups, isFaculty, isAdmin, phone, office){
+	// 	var usersRef = firebase.database().ref('users/');
+	// 	var newUserKey = usersRef.push().key;
+	// 	var newUser = new User(newUserKey, firstName, lastName, email, groups, isFaculty, isAdmin, phone, office);
+
+	// 	var updates = {};
+	// 	updates['/users/' + newUserKey] = user;
+	// 	firebase.database().ref().update(updates);
+	// }
 
 //---------------------------
 

@@ -26,6 +26,10 @@
 			window.location.href = "createAnnouncement.html";
 		});
 
+		$("#add_user_button").on("click", function(){
+			window.location.href = "addUser.html";
+		});
+
 
 		//listen for current/new announcements for ALL users/groups
 		var announcementsRef = firebase.database().ref('announcements/').orderByChild('postDate');

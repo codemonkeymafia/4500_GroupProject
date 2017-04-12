@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Add User</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script>
+	<script>
+	  // Initialize Firebase
+	  // TODO: Replace with your project's customized code snippet
+	  var config = {
+	    apiKey: "AIzaSyAAiz-tSG6vKmKHlryHnkVXq0okNpS5Ga4",
+	    authDomain: "musicapp4500.firebaseapp.com",
+	    databaseURL: "https://musicapp4500.firebaseio.com",
+	    projectId: "musicapp4500",
+	    storageBucket: "musicapp4500.appspot.com",
+	    messagingSenderId: "947399837764"
+	  };
+	  firebase.initializeApp(config);
+</script>
+</head>
+<body>
+
+	<button id="back_button" class="btn btn-default">Back</button>
+
+    <h1>Add User</h1>
+
+    <form id="addUserForm" method="post">
+	<label>First Name: <input type="text" id="firstName" name="firstName" placeholder="Jane" required></label>
+
+	<label>Last Name: <input type="text" id="lastName" name="lastName" placeholder="Doe" required></label>
+	<br>
+
+    <label>Email: <input type="email" id="email" name="user-email" placeholder="email@example.com" required></label>
+    <br>
+
+	<hr>
+
+    <div id="groupCheckbox" name = "groupCheckbox" class="checkbox_group"></div>
+ 
+	<hr>
+
+    <label><input type="checkbox" id="isFaculty" name="isFaculty" value="isfaculty">Faculty Member?</label>
+	<br>
+	<hr>
+    <div id="facultyInfo">
+	    <label>Phone: ( <input type="text" id="phone-areaCode" name="phone-areaCode" placeholder="xxx" maxlength="3"> ) 
+	    	<input type="text" id="phone-prefix" name="phone-prefix" placeholder="xxx" maxlength="3" > - 
+			<input type="text" id="phone-suffix" name="phone-suffix" placeholder="xxxx" maxlength="4"> 
+	    </label>
+	    	<br>
+		<label> Office: <input type="text" id="office" name="office" value="" placeholder="123 Example Building, Room 000"></label>
+		<br>
+
+    </div>
+
+    <input type="submit" id="add_user_submit" name="add_user_submit" value="Submit">
+    	
+    </form>
+
+    <script src="./functions/userModel.js"></script>
+    <script src="./functions/groupModel.js"></script>
+    <script src="./functions/announcementModel.js"></script>
+    <script src="./functions/addUser.js"></script>
+	
+</body>
+</html>
