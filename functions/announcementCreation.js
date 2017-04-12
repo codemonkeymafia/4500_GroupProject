@@ -3,12 +3,20 @@
     var groupNum = 1;
 
     $(document).ready(function() {
-     
-        //populate check boxs based off existing distribution groups
+        
         populateCheckBox();
-
+    
         $("#back_button").on("click", function(){
-            window.location.href = "announcements.html";
+            //window.location.href = "announcements.html";
+            var groups = [];
+            $(".checkboxGroups").each(function(){
+                if($(this).is(':checked')){  
+                    console.log($(this).attr('data-group'));
+                    groups.push($(this).attr('data-group'));
+                }
+               
+            });
+            console.log( groups);
         });
 
         $("#announcementEntry_form").on("submit", function(e){
@@ -17,8 +25,16 @@
             var title = $("#announcement_title").val();
             var message = $("#announcement_message").val();
             var user = new User(null, "Jeffery", "Calhoun", "jcd39@mail.umsl.edu", null, true, true, null, null);
-            addAnnouncement(user, title, message, priority, null);
-        
+            
+            //add checked boxes to groups array
+            var groups = [];
+            $(".checkboxGroups").each(function(){
+                if($(this).is(':checked')){  
+                    groups.push($(this).attr('data-group'));
+                }
+            });
+            
+            addAnnouncement(user, title, message, priority, groups);
         });
   
     });
@@ -33,27 +49,18 @@
         groupRef.orderByChild('name').on('child_added', function(snapshot) {
            
             $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val()));
-            $("#groupCheckbox").append(getLabel(snapshot.val()));
             groupNum++;
         });
 
-
-
     }
 
-    //create checkbox input and assign attributes for use later
+    //create checkbox input dynamically and use 'data-group' attribute to store group name for DB record downstream
     function groupHtmlFromObject(fbGroup) {
-        console.log(groupNum);
 
-        var $ctrl = $('<input/>', {
-            type: 'checkbox',
-            id: 'group' + groupNum,
-            name: 'group' + groupNum,
-            datagroup: fbGroup.name,
-            checked: false
-        });
-
-        return $ctrl;
+        var html = '<input type = "checkbox" id = "group' + groupNum + '"class = "checkboxGroups" name = "group' + groupNum + '"';
+        html += 'data-group="' + fbGroup.name + '">';
+        html +='<label>' + fbGroup.name + '</label></br>';
+        return html;
     }
 
     //create label for checkbox
