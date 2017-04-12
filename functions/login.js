@@ -60,19 +60,6 @@
 		
 	}
 
-	//signs the user out
-
-	function logout(){
-
-		firebase.auth().signOut().then(function() {
-		  // Sign-out successful.
-		  console.log("signout success");
-		  logoutButton.hide();
-		}).catch(function(error) {
-		  // An error happened.
-		  console.log("signout failed");
-		});	
-	}
 
 
 	//Creates a user with specified email and randomly generated password in firebase,  then sends password reset link to that user's email

@@ -4,7 +4,6 @@
 		this.firstName = firstName || "";
 		this.lastName = lastName || "";
 		this.email = email || "";
-
 		this.isFaculty = isFaculty || false;
 		this.isAdmin = isAdmin || false;
 		this.groups = groups || [];

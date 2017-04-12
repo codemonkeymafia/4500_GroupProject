@@ -7,10 +7,13 @@
         //populate check boxs based off existing distribution groups
         populateCheckBox();
 
+        //when the back button is clicked, go back to announcements page
         $("#back_button").on("click", function(){
             window.location.href = "announcements.html";
         });
 
+        //when the submit button is pressed for the new announcements form,
+        //get the data and try to add new announcement to firebase
         $("#announcementEntry_form").on("submit", function(e){
             e.preventDefault();
             var priority = $("#announcemet_priority").val();
@@ -36,10 +39,8 @@
             $("#groupCheckbox").append(getLabel(snapshot.val()));
             groupNum++;
         });
-
-
-
     }
+
 
     //create checkbox input and assign attributes for use later
     function groupHtmlFromObject(fbGroup) {
@@ -56,6 +57,7 @@
         return $ctrl;
     }
 
+
     //create label for checkbox
     function getLabel(fbGroup) {
 
@@ -63,8 +65,7 @@
     }
 
 
-
-
+    //Creates a new group in Firebase
     function addGroup(name, users) {
 
         var groupsRef = firebase.database().ref('groups/');
@@ -76,7 +77,9 @@
         firebase.database().ref().update(updates);
 
     }
+    
 
+    //Creates a new announcement in Firebase
     function addAnnouncement(faculty, title, message, priority, groups){
 
         var announcementsRef = firebase.database().ref('announcements/');
@@ -91,17 +94,6 @@
             alert("Failed to add announcement!");
         });
     }
-
-    // function addAnnouncement(announcement) {
-    //     var key = firebase.database().ref('announcements/').push().key;
-    //     announcement.id = key;
-    //     console.log(announcement);
-    //     firebase.database().ref('announcements/' + key).set({
-    //         announcement: announcement
-    //     }).then(function(){
-    //         // window.location.href="announcements.html";
-    //     });
-    // }
 
 
 }());
