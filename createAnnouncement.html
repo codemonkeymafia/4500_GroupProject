@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="styles/styles.css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/css/bootstrapValidator.min.css" />
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.0/js/bootstrapValidator.min.js">
+    </script>
+
     <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script>
@@ -35,31 +42,58 @@
 
         <h1>Manage Announcements</h1>
 
-        <form id="announcementEntry_form" method="post">
+        <form id="announcementEntry_form" class="form-horizontal" method="post">
             <select id="announcemet_priority">
-            <option value="2">Mandatory</option>
-            <option value="1" selected>Normal</option>
-            <option value="0">Low</option>
-        </select>
-            <br><br>
-            <label>Title</label>
+                <option value="2">Mandatory</option>
+                <option value="1" selected>Normal</option>
+                <option value="0">Low</option>
+            </select>
             <br>
-            <input type="text" id="announcement_title" name="announcement_title" required="">
-            <br><br>
-            <label>Announcement</label>
             <br>
-            <textarea style="resize:none" id="announcement_message" name="announcement_message" cols="40" rows="20" required></textarea>
-            <br><br>
-            <h2>Select Distribution Group(s)</h2>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Title</label>
+                <br>
+                <div class="col-md-6">
+                    <input type="text" id="announcement_title" name="announcement_title" class="form-control">
+                </div>
+            </div>
             <br>
-            <div id="groupCheckbox" name = "groupCheckbox" class="checkbox_group"></div>
-            <br><br>
-            <br><br>
-            <input type="submit" id="announcement_submit" name="announcement_submit" value="Submit">
+            <br>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Announcement</label>
+                <br>
+                <div class="col-md-6">
+                    <textarea id="announcement_message" name="announcement_message" cols="40" rows="20" class="form-control"></textarea>
+                </div>
+            </div>
+            <br>
+            <br>
 
+            <br>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Available Distribution Groups</label>
+                <div class="col-md-6">
+                    <div id="groupCheckbox" name="groupCheckbox" class="checkbox_group"></div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <!--error messages put here-->
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <div id="messages"></div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="form-group">
+                <div class="col-md-9 col-md-offset-3">
+                    <!--input type="submit" id="announcement_submit" name="announcement_submit" value="Submit"-->
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
         </form>
     </div>
-
 
     <script src="./functions/userModel.js"></script>
     <script src="./functions/groupModel.js"></script>
