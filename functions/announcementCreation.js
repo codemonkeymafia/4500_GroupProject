@@ -14,6 +14,33 @@
 
     $(document).ready(function() {
 
+         //when the back button is clicked, go back to announcements page    
+        $("#back_button").on("click", function() {
+            window.location.href = "announcements.html";
+        });
+
+        //when the submit button is pressed for the new announcements form,
+        //get the data and try to add new announcement to firebase
+        $("#announcementEntry_form").on("submit", function(e) {
+            if (!e.isDefaultPrevented()) {
+                e.preventDefault();
+                var priority = $("#announcemet_priority").val();
+                var title = $("#announcement_title").val();
+                var message = $("#announcement_message").val();
+                var user = new User(null, "Jeffery", "Calhoun", "jcd39@mail.umsl.edu", null, true, true, null, null);
+
+                //add checked boxes to groups array
+                var groups = [];
+                $(".checkboxGroups").each(function() {
+                    if ($(this).is(':checked')) {
+                        groups.push($(this).attr('data-group'));
+                    }
+                });
+                console.log("success");
+                addAnnouncement(user, title, message, priority, groups);
+            }
+        });
+
         populateCheckBox();
 
 
@@ -56,32 +83,7 @@
 
 
 
-        //when the back button is clicked, go back to announcements page    
-        $("#back_button").on("click", function() {
-            window.location.href = "announcements.html";
-        });
-
-        //when the submit button is pressed for the new announcements form,
-        //get the data and try to add new announcement to firebase
-        $("#announcementEntry_form").on("submit", function(e) {
-            if (!e.isDefaultPrevented()) {
-                e.preventDefault();
-                var priority = $("#announcemet_priority").val();
-                var title = $("#announcement_title").val();
-                var message = $("#announcement_message").val();
-                var user = new User(null, "Jeffery", "Calhoun", "jcd39@mail.umsl.edu", null, true, true, null, null);
-
-                //add checked boxes to groups array
-                var groups = [];
-                $(".checkboxGroups").each(function() {
-                    if ($(this).is(':checked')) {
-                        groups.push($(this).attr('data-group'));
-                    }
-                });
-                console.log("success");
-                addAnnouncement(user, title, message, priority, groups);
-            }
-        });
+       
 
     });
 
