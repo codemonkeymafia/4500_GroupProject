@@ -1,5 +1,15 @@
 (function() {
 
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+
+      } else {
+        // No user is signed in.
+        alert("Logging out!");
+        window.location.href = "login.html";
+      }
+    });
+
     var groupNum = 1;
 
     var groups = [];
@@ -40,12 +50,12 @@
             var office = $("#office").val();
             
             var user = new User(null, firstName, lastName, email, selectedGroups, isFaculty, isAdmin, (isFaculty ? phone : undefined), (isFaculty ? office : undefined));
-            registerUser(user);
-            selectedGroups.forEach(function(group){
-                addUserToGroup(user, group);
-            });
-            console.log(user);
             
+            registerUser(user);
+            
+            
+
+
             
         });
 
@@ -116,9 +126,7 @@
         firebase.auth().sendPasswordResetEmail(user.email).then(function() {
               // Email sent.
               console.log("password reset email sent");
-              addUser(user.firstName, user.lastName, user.email, user.groups, user.isFaculty, user.isAdmin, user.phone, user.office);
-
-              var groupsRef = firebase.database().ref("groups/");
+              addUser(user);
 
             }, function(error) {
               // An error happened.
@@ -140,12 +148,20 @@
         var updates = {};
         updates['/users/' + newUserKey] = user;
         firebase.database().ref().update(updates);
+
+        var selectedGroups = newUser.groups;
+
+        selectedGroups.forEach(function(group){
+            console.log("attempting to add user to " + group.name);
+            addUserToGroup(newUser, group);
+        });
     }
 
     function addUserToGroup(user, group){
-        var groupUsersRef = firebase.database().ref('groups/' + group.id + "/users/");
+        var groupUsersRef = firebase.database().ref('groups/' + group.id + "/users/" + user.id + "/");
 
-        groupUsersRef.push(user, function(){
+
+        groupUsersRef.push(user.id).then(function(){
             console.log(user.firstName + "added to " + group.name);
         });
     }

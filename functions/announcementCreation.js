@@ -1,5 +1,15 @@
 (function() {
 
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+
+      } else {
+        // No user is signed in.
+        alert("Logging out!");
+        window.location.href = "login.html";
+      }
+    });
+
     var groupNum = 1;
 
     $(document).ready(function() {

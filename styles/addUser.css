@@ -1,0 +1,27 @@
+*{
+	box-sizing: border-box;
+}
+
+#back_button, #add_user_submit{
+    box-shadow: 1px 2px 5px #000000;
+      color: #ffffff;
+      background-color: #981E32;
+      border-color: #EAAB00;
+      margin: 0 auto;
+}
+
+form{
+	width: 100%;
+}
+
+form *{
+	margin: 0 auto;
+}
+
+input{
+	margin-left: 8px;
+}
+
+input[type="text"], input[type="email"], input[type="text"]{
+	border: 1px solid black;
+}
