@@ -30,6 +30,10 @@
     .carousel-caption{
   background: rgba(0,0,0,0.5);
 }
+
+#calendar-frame{
+    min-height: 300px;
+  }
     </style>
 
 </head>
@@ -210,7 +214,7 @@
         <hr>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class=" col-xs-12 col-md-4">
               <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FUMSLMusicDepartment%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
             </div>
             <!-- Replacing this picture with a google calendar embed
@@ -218,8 +222,8 @@
               <img class="img-responsive" src="http://i1347.photobucket.com/albums/p720/the_total_jim/BandBannerCropped_zpszm3zvuwv.jpg" alt="">
             </div>
           -->
-            <div class="col-md-8">
-              <iframe src="https://calendar.google.com/calendar/embed?src=umslmusic%40gmail.com&ctz=America/Chicago" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+            <div class=" col-xs-12 col-md-8">
+              <iframe id="calendar-frame" src="https://calendar.google.com/calendar/embed?src=umslmusic%40gmail.com&ctz=America/Chicago" style="border: 0" width="100%" frameborder="0" scrolling="no"></iframe>
             </div>
         </div>
 
