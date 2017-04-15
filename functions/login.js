@@ -4,6 +4,16 @@
 
 	firebase.auth().onAuthStateChanged(function(user) {
 	  if (user) {
+	  	//User is signed in to firebase
+
+	  	if(sessionStorage){
+	  		sessionStorage.setItem("currentUser")
+
+	  	}
+	  	else{
+	  		console.log("Session storage not available...logging out");
+	  		logout();
+	  	}
 	    window.location.href = "announcements.html";
 	  } else {
 	    // No user is signed in.
@@ -46,6 +56,7 @@
 		firebase.auth().signInWithEmailAndPassword(email, password).then(function(){
 
 			console.log("user signed in");
+
 			window.location.href = "announcements.html";
 			
 

@@ -105,10 +105,10 @@
     function registerUser(user){
         var password = generateRandomPassword();
 
-        firebase.auth().createUserWithEmailAndPassword(user.email, password).then(function(){
+        firebase.auth().createUserWithEmailAndPassword(user.email, password).then(function(newFIRUser){
 
             console.log("user created");
-            sendPasswordResetEmail(user);
+            sendPasswordResetEmail(user, newFIRUser);
 
         }, function(error) {
           // Handle Errors here.
@@ -122,11 +122,11 @@
 
     //Given an email, sends a password reset link to the user with that email, via Firebase
 
-    function sendPasswordResetEmail(user){
+    function sendPasswordResetEmail(user, newFIRUser){
         firebase.auth().sendPasswordResetEmail(user.email).then(function() {
               // Email sent.
               console.log("password reset email sent");
-              addUser(user);
+              addUser(user, newFIRUser);
 
             }, function(error) {
               // An error happened.
@@ -140,21 +140,25 @@
         return randomstring;
     }
 
-    function addUser(user){
+    function addUser(user, newFIRUser){
+        var uid = newFIRUser.uid;
         var usersRef = firebase.database().ref('users/');
-        var newUserKey = usersRef.push().key;
-        var newUser = new User(newUserKey, user.firstName, user.lastName, user.email, user.groups, user.isFaculty, user.isAdmin, user.phone, user.office);
+        // var newUserKey = usersRef.push().key;
+        var newUser = new User(uid, user.firstName, user.lastName, user.email, user.groups, user.isFaculty, user.isAdmin, user.phone, user.office);
+        usersRef.child(uid).set(newUser, function(){
+            //user added to the users database; now add the user to appropriate groups
+            var selectedGroups = newUser.groups;
 
-        var updates = {};
-        updates['/users/' + newUserKey] = user;
-        firebase.database().ref().update(updates);
-
-        var selectedGroups = newUser.groups;
-
-        selectedGroups.forEach(function(group){
-            console.log("attempting to add user to " + group.name);
-            addUserToGroup(newUser, group);
+            selectedGroups.forEach(function(group){
+                console.log("attempting to add user to " + group.name);
+                addUserToGroup(newUser, group);
+            });
         });
+        // var updates = {};
+        // updates['/users/' + newUserKey] = user;
+        // firebase.database().ref().update(updates);
+
+        
     }
 
     function addUserToGroup(user, group){

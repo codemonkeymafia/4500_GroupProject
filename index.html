@@ -26,14 +26,42 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+    <!-- The style options here would need to be added to a CSS stylesheet. -->
+    <!-- First need to determine which are page specific, and which are project specific -->
     <style>
-    .carousel-caption{
-  background: rgba(0,0,0,0.5);
-}
+      .carousel-caption{
+        background: rgba(0,0,0,0.5);
+      }
 
-#calendar-frame{
-    min-height: 300px;
-  }
+      @media (max-width: 550px) {
+     .big-container {
+         display: none;
+       }
+     }
+     @media (min-width: 550px) {
+       .small-container {
+         display: none;
+       }
+     }
+     /* Responsive iFrame */
+     .responsive-iframe-container {
+         position: relative;
+         padding-bottom: 56.25%;
+         padding-top: 30px;
+         height: 0;
+         overflow: hidden;
+     }
+     .responsive-iframe-container iframe,
+     .vresponsive-iframe-container object,
+     .vresponsive-iframe-container embed {
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+     }
     </style>
 
 </head>
@@ -222,14 +250,20 @@
               <img class="img-responsive" src="http://i1347.photobucket.com/albums/p720/the_total_jim/BandBannerCropped_zpszm3zvuwv.jpg" alt="">
             </div>
           -->
-            <div class=" col-xs-12 col-md-8">
-              <iframe id="calendar-frame" src="https://calendar.google.com/calendar/embed?src=umslmusic%40gmail.com&ctz=America/Chicago" style="border: 0" width="100%" frameborder="0" scrolling="no"></iframe>
+            <!-- Here I addex two different calendars, it switches to the list view when it is in a small container, including mobile. -->
+            <div class="col-md-8">
+              <div class="responsive-iframe-container big-container">
+              <iframe src="https://calendar.google.com/calendar/embed?src=umslmusic%40gmail.com&ctz=America/Chicago" style="border-width:0" width="100%" height="650" frameborder="0" scrolling="no"></iframe>
+              </div>
+              <div class="responsive-iframe-container small-container">
+              <iframe src="https://calendar.google.com/calendar/embed?mode=AGENDA&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=umslmusic%40gmail.com&amp;color=%23B1440E&amp;ctz=America%2FChicago" style="border-width:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+              </div>
             </div>
         </div>
 
         <hr>
 
-        <!-- Call to Action Section -->
+        <!-- Return to top of page.  -->
         <div class="well">
             <div class="row">
                 <div class="col-md-8">
@@ -273,4 +307,3 @@
 </body>
 
 </html>
-
