@@ -18,6 +18,12 @@
            populateCheckBox();
         }
 
+        //hide and disable the option to add users as faculty if the current user is not an admin
+        if( !currentUser.isAdmin ){
+            $("#isFacultyField").remove();
+            $("#facultyInfo").remove();
+        }
+
       } else {
         // No user is signed in.
         alert("No User!; Logging Out!");
@@ -48,7 +54,7 @@
             var email = $("#email").val();
             var firstName = $("#firstName").val();
             var lastName = $("#lastName").val();
-            var isAdmin = false;
+            var isAdmin = $("#isAdmin").is(':checked');
             var isFaculty = $("#isFaculty").is(':checked');
 
             var selectedGroups = new Array();
@@ -97,7 +103,7 @@
                 $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
                 checkboxIndex += 1;
                 groupNum++;
-                
+
             });
 
         }

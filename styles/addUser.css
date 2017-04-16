@@ -25,3 +25,8 @@ input{
 input[type="text"], input[type="email"], input[type="text"]{
 	border: 1px solid black;
 }
+
+.warning{
+	color: red;
+	font-weight: bold;
+}
