@@ -30,6 +30,8 @@
 		$('#login_form').on('submit', function(e){
 			//prevent page reload when login button is clicked
 			e.preventDefault();
+			e.stopImmediatePropagation();
+			$('#login_submit').prop('disabled', true);
 
 			//get email from email field; then clear the field
 			var email= $('#login_email').val();
@@ -41,7 +43,7 @@
 
 			//login with the given email and password; and disable the login button
 			login(email, password);
-			$('#login_submit').prop('disabled', true);
+			
 		});
 
 

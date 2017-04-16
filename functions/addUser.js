@@ -50,6 +50,11 @@
         //get the data and try to add new announcement to firebase
         $("#addUserForm").on("submit", function(e){
             e.preventDefault();
+            e.stopImmediatePropagation();
+
+            //disable the button while processing
+            $("#add_user_submit").attr("disabled", true);
+
             alert("attempting to add user");
             var email = $("#email").val();
             var firstName = $("#firstName").val();
@@ -165,10 +170,12 @@
               // Email sent.
               console.log("password reset email sent");
               addUser(user, newFIRUser);
+              $("#add_user_submit").attr("disabled", false);
 
             }, function(error) {
               // An error happened.
               console.log("failed to send password reset email");
+              $("#add_user_submit").attr("disabled", false);
             });
     }
 
@@ -184,6 +191,7 @@
         // var newUserKey = usersRef.push().key;
         var newUser = new User(uid, user.firstName, user.lastName, user.email, user.groups, user.isFaculty, user.isAdmin, user.phone, user.office);
         usersRef.child(uid).set(newUser, function(){
+            $("#add_user_submit").attr("disabled", false);
             //user added to the users database; now add the user to appropriate groups
             var selectedGroups = newUser.groups;
 

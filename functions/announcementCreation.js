@@ -40,6 +40,8 @@
         $("#announcementEntry_form").on("submit", function(e) {
             if (!e.isDefaultPrevented()) {
                 e.preventDefault();
+                e.stopImmediatePropagation();
+                $("#submitButton").prop('disabled', true);
                 var priority = $("#announcemet_priority").val();
                 var title = $("#announcement_title").val();
                 var message = $("#announcement_message").val();
@@ -161,6 +163,8 @@
     //Creates a new announcement in Firebase
     function addAnnouncement(faculty, title, message, priority, groups) {
 
+        alert("adding announcement");
+
         var announcementsRef = firebase.database().ref('announcements/');
         var newAnnouncementKey = announcementsRef.push().key;
         var newAnnouncement = new Announcement(newAnnouncementKey, faculty, title, message, priority, groups);
@@ -169,8 +173,10 @@
         updates['/announcements/' + newAnnouncementKey] = newAnnouncement;
         firebase.database().ref().update(updates).then(function() {
             window.location.href = "announcements.html";
+            $("#submitButton").prop('disabled', false);
         }, function(error) {
             alert("Failed to add announcement!");
+            $("#submitButton").prop('disabled', false);
         });
     }
 
