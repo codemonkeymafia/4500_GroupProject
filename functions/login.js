@@ -7,9 +7,6 @@
 	  	//User is signed in to firebase
 	  	//read user info from database and store in session storage
 	  	firebase.database().ref("users/" + user.uid).once("value").then(function(snapshot){
-	  		// console.log("snapshot: " + JSON.stringify(snapshot.val()));
-	  		
-	  		// console.log(snapshot.val());
 
 	  		setGlobalUser(snapshot.val());
 	  	});
@@ -76,57 +73,8 @@
 	}
 
 
-
-	// //Creates a user with specified email and randomly generated password in firebase,  then sends password reset link to that user's email
-	// function registerUser(email){
-	// 	var password = generateRandomPassword();
-
-	// 	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-
-	// 		console.log("user created");
-	// 		sendPasswordResetEmail(email);
-
-	// 	}, function(error) {
-	// 	  // Handle Errors here.
-	// 	  var errorCode = error.code;
-	// 	  var errorMessage = error.message;
-	// 	  // ...
-	// 	  console.log(errorMessage);
-	// 	});
-
-	// }
-
-
-	// //Given an email, sends a password reset link to the user with that email, via Firebase
-
-	// function sendPasswordResetEmail(email){
-	// 	firebase.auth().sendPasswordResetEmail(email).then(function() {
-	// 		  // Email sent.
-	// 		  console.log("password reset email sent");
-	// 		}, function(error) {
-	// 		  // An error happened.
-	// 		  console.log("failed to send password reset email");
-	// 		});
-	// }
-
-	// //Generates a random password
-	// function generateRandomPassword(){
-	// 	var randomstring = Math.random().toString(36).slice(-8);
-	// 	return randomstring;
-	// }
-
 //------------------------
 	//These functions will be moved to appropriate files in the application later
-	function addAnnouncement(faculty, title, message, priority, groups){
-
-		var announcementsRef = firebase.database().ref('announcements/');
-		var newAnnouncementKey = announcementsRef.push().key;
-		var newAnnouncement = new Announcement(newAnnouncementKey, faculty, title, message, priority, groups);
-
-		var updates = {};
-		updates['/announcements/' + newAnnouncementKey] = newAnnouncement;
-		firebase.database().ref().update(updates);
-	}
 
 	function addGroup(name, users){
 
@@ -140,16 +88,6 @@
 
 	}
 
-
-	// function addUser(firstName, lastName, email, groups, isFaculty, isAdmin, phone, office){
-	// 	var usersRef = firebase.database().ref('users/');
-	// 	var newUserKey = usersRef.push().key;
-	// 	var newUser = new User(newUserKey, firstName, lastName, email, groups, isFaculty, isAdmin, phone, office);
-
-	// 	var updates = {};
-	// 	updates['/users/' + newUserKey] = user;
-	// 	firebase.database().ref().update(updates);
-	// }
 
 //---------------------------
 

@@ -22,24 +22,19 @@
                 groupRefs.push("all/");
 				currentUser.groups.forEach(function(group){
 					groupRefs.push(group.id + "/");
-					// console.log(groupRefs);
 
 					
 				});
 
-				console.log("here");
 
 				groupRefs.forEach(function(subRef){
 					announcementsBaseRef.child(subRef).orderByChild("postDate").on("child_added", function(data){
 						var announcement = data.toJSON();
 						if(! uniqueAnnouncements.hasOwnProperty(announcement.id)){
-							console.log("uniqueAnnouncements changed!");
 							uniqueAnnouncements[announcement.id] = announcement;
 							$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
 						}
-						// announcements.unshift(announcement);
-						
-						// console.log(Object.keys(uniqueAnnouncements));
+
 					});
 				});
 
@@ -99,7 +94,6 @@
 		}
 
 		var firstName = announcement.sender.firstName;
-		console.log(firstName);
 
 		//convert announcement author info into a simple spaced string
 		var authorName = firstName + " " + announcement.sender.lastName;
@@ -176,13 +170,8 @@
 							            </div>
 							            <div class="modal-footer">
 							                <p>Posted by: ` + announcement.sender.firstName + " " + announcement.sender.lastName +  `</p>
-<<<<<<< HEAD
 							                <p>On: ` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a") + `</p>
 							                <p>To: ` + groupList + `</p>
-=======
-							                <p>On: ` + $.format.date(announcement.postDate || new Date(), "MMM dd, yyyy") + `</p>
-							                <p>To: ` + (groupList) + `</p>
->>>>>>> 8a63b17d51ef0d8c0d5cad8f65c8375f98f81087
 							            </div>
 							        </div>
 							    </div>

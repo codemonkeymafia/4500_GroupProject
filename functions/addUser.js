@@ -55,7 +55,6 @@
             //disable the button while processing
             $("#add_user_submit").attr("disabled", true);
 
-            alert("attempting to add user");
             var email = $("#email").val();
             var firstName = $("#firstName").val();
             var lastName = $("#lastName").val();
@@ -64,7 +63,7 @@
 
             var selectedGroups = new Array();
             $.each($("input[name='group']:checked"), function() {
-                console.log("checked");
+                // console.log("checked");
               selectedGroups.push(groups[$(this).val()]);
               // or you can do something to the actual checked checkboxes by working directly with  'this'
               // something like $(this).hide() (only something useful, probably) :P
@@ -212,7 +211,7 @@
 
 
         groupUsersRef.push(user.id).then(function(){
-            console.log(user.firstName + "added to " + group.name);
+            // console.log(user.firstName + "added to " + group.name);
         });
     }
 

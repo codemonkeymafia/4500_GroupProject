@@ -52,7 +52,7 @@
                 //store checked boxes
                 var selectedGroups = new Array();
                 $.each($("input[name='group']:checked"), function() {
-                    console.log("checked");
+                    // console.log("checked");
                     selectedGroups.push(groups[$(this).val()]);
                 });
 
@@ -64,7 +64,6 @@
                 //     });
                 // }
 
-                console.log(selectedGroups);
 
                 addAnnouncement(currentUser, title, message, priority, selectedGroups);
             }
@@ -127,7 +126,6 @@
             groupRef.orderByChild('name').on('child_added', function(snapshot) {
 
                 groups.push(snapshot.val());
-                console.log(snapshot.val());
 
                 $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
                 checkboxIndex += 1;
@@ -169,13 +167,11 @@
     //Creates a new announcement in Firebase
     function addAnnouncement(faculty, title, message, priority, groups) {
 
-        alert("adding announcement");
 
         var groupsRefs = [];
         var groupNames = [];
 
         if(!groups || groups.length < 1){
-            console.log("sending to all/");
             groupsRefs.push("all");
             groupNames.push("all");
         }
