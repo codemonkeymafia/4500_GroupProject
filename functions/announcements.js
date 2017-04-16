@@ -2,6 +2,7 @@
 
 	var uniqueAnnouncements = {};
 
+
 	var logoutButton = $('#logout_button');
 
 	var announcementModal;
@@ -19,23 +20,78 @@
                 currentUser = getGlobalUser();
                 //populate dynamic checkbox with available groups
 
-                groupRefs.push("all/");
+                groupRefs.push("all");
 				currentUser.groups.forEach(function(group){
-					groupRefs.push(group.id + "/");
+					groupRefs.push(group.id);
 
 					
 				});
 
+				// setTimeout(function(){
+				// 	//sort the announcements by key and store them in an array
+				// 	var anns = [];
+				// 	var ks = Object.keys(uniqueAnnouncements);
+				// 	ks.sort();
+				// 	ks.forEach(function(key){
+				// 		console.log(uniqueAnnouncements);
+				// 		anns.push(uniqueAnnouncements[key]);
+				// 	});
+					
+				// 	anns.forEach(function(announcement){
+				// 		$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
 
-				groupRefs.forEach(function(subRef){
-					announcementsBaseRef.child(subRef).orderByChild("postDate").on("child_added", function(data){
-						var announcement = data.toJSON();
-						if(! uniqueAnnouncements.hasOwnProperty(announcement.id)){
-							uniqueAnnouncements[announcement.id] = announcement;
-							$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
+				// 	});
+				// }, 4000);
+
+
+				var groupsFound = 0;
+
+				announcementsBaseRef.on("child_added", function(data){
+					var groupID = data.key;
+					if($.inArray(groupID, groupRefs) !== -1){
+						//the user is a part of this group
+						++groupsFound;
+						var announcementKeys = Object.keys(data.val());
+
+						//filter out duplicate announcements for the current gruup
+						announcementKeys.forEach(function(key){
+							if(! uniqueAnnouncements.hasOwnProperty(key)){
+								uniqueAnnouncements[key] = data.val()[key];
+								// $('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
+							}
+						});
+
+						if(groupsFound === groupRefs.length){
+							console.log("done loading announcements");
+							var anns = [];
+							var ks = Object.keys(uniqueAnnouncements);
+							ks.sort();
+							ks.forEach(function(key){
+								anns.push(uniqueAnnouncements[key]);
+							});
+							
+							anns.forEach(function(announcement){
+								$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
+
+							});
+
+
+
+							//initial list loaded; now listen for new ones
+							console.log("listening for announcements to user's groups")
+
+							groupRefs.forEach(function(subRef){
+							announcementsBaseRef.child(subRef).on("child_added", function(data){
+								var announcement = data.toJSON();
+								if(! uniqueAnnouncements.hasOwnProperty(announcement.id)){
+									uniqueAnnouncements[announcement.id] = announcement;
+									$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
+								}
+
+							});
+				});
 						}
-
-					});
+					}
 				});
 
             } else {
