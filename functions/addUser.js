@@ -97,6 +97,7 @@
                 $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
                 checkboxIndex += 1;
                 groupNum++;
+                
             });
 
         }
