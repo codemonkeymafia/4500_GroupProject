@@ -5,16 +5,15 @@
 	firebase.auth().onAuthStateChanged(function(user) {
 	  if (user) {
 	  	//User is signed in to firebase
+	  	//read user info from database and store in session storage
+	  	firebase.database().ref("users/" + user.uid).once("value").then(function(snapshot){
+	  		// console.log("snapshot: " + JSON.stringify(snapshot.val()));
+	  		
+	  		// console.log(snapshot.val());
 
-	  	if(sessionStorage){
-	  		sessionStorage.setItem("currentUser")
+	  		setGlobalUser(snapshot.val());
+	  	});
 
-	  	}
-	  	else{
-	  		console.log("Session storage not available...logging out");
-	  		logout();
-	  	}
-	    window.location.href = "announcements.html";
 	  } else {
 	    // No user is signed in.
 	  }
@@ -57,7 +56,9 @@
 
 			console.log("user signed in");
 
-			window.location.href = "announcements.html";
+			//Will call authStateChanged function defined above
+
+
 			
 
 		}, function(error) {
@@ -67,6 +68,7 @@
 		  // ...
 		  alert("signin failed");
 		  console.log("signin failed");
+		  // $('#login_submit').prop('disabled', false);
 		});
 		
 	}

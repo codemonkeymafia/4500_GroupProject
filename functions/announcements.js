@@ -42,19 +42,6 @@
 	});
 
 
-	//signs user out of application, and redirects to login page
-	function logout(){
-		firebase.auth().signOut().then(function() {
-		  // Sign-out successful.
-		  if(window.location.href !== "login.html"){
-		  	window.location.href = "login.html";
-		  }
-
-		}).catch(function(error) {
-		  // An error happened.
-		  console.log("Error logging out of firebase");
-		});	
-	}
 
 
 	//Creates a new announcement card from a given accouncement

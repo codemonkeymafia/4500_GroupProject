@@ -1,11 +1,26 @@
 (function() {
 
+    var currentUser;
+
+    //TODO: Make this script execute before the page even renders
+    //Verify that the user is authenticated and priveleged
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
+        //user is logged into firebase
+        currentUser = getGlobalUser();
+
+        if( !currentUser.isFaculty ){
+            alert("Only faculty can access this page!");
+                window.location.href = "announcements.html";
+        }
+        else{
+           //user is verified as faculty
+           populateCheckBox();
+        }
 
       } else {
         // No user is signed in.
-        alert("Logging out!");
+        alert("No User!; Logging Out!");
         window.location.href = "login.html";
       }
     });
@@ -18,7 +33,6 @@
 
         $("#facultyInfo").hide();
         
-        populateCheckBox();
 
         //when the back button is clicked, go back to announcements page    
         $("#back_button").on("click", function(){
@@ -69,19 +83,36 @@
     //TODO: Should be populated by groups a user belongs to; or all groups if the user is an administrator
     function populateCheckBox() {
 
-        var groupRef = firebase.database().ref('groups/');
+        if(currentUser.isAdmin){
+            //admin can send announcement to any group
+            var groupRef = firebase.database().ref('groups/');
 
-        var checkboxIndex = 0;
+            var checkboxIndex = 0;
 
-        //query firebase group nodes and use 'name' to populate checkbox group
-        groupRef.orderByChild('name').on('child_added', function(snapshot) {
+            //query firebase group nodes and use 'name' to populate checkbox group
+            groupRef.orderByChild('name').on('child_added', function(snapshot) {
 
-            groups.push(snapshot.val());
-           
-            $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
-            checkboxIndex += 1;
-            groupNum++;
-        });
+                groups.push(snapshot.val());
+               
+                $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
+                checkboxIndex += 1;
+                groupNum++;
+            });
+
+        }
+        else{
+
+            //only populate the current user's groups
+            var checkboxIndex = 0;
+
+            currentUser.groups.forEach(function(group){
+                $("#groupCheckbox").append(groupHtmlFromObject(group, checkboxIndex));
+                checkboxIndex += 1;
+                groupNum++;
+
+            });
+        }
+
 
     }
 

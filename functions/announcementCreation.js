@@ -1,20 +1,34 @@
 (function() {
 
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
+    var currentUser;
 
-        } else {
-            // No user is signed in.
-            alert("Logging out!");
-            window.location.href = "login.html";
-        }
-    });
+    
 
     var groupNum = 1;
 
     var groups = [];
 
     $(document).ready(function() {
+
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                currentUser = getGlobalUser();
+                //populate dynamic checkbox with available groups
+
+                if( !currentUser.isFaculty ){
+                    alert("only faculty can access this page");
+                    window.location.href = "announcements.html";
+                }
+                else{
+                    populateCheckBox();
+                }
+
+            } else {
+                // No user is signed in.
+                alert("Logging out!");
+                window.location.href = "login.html";
+            }
+        });
 
          //when the back button is clicked, go back to announcements page    
         $("#back_button").on("click", function() {
@@ -51,8 +65,7 @@
             }
         });
 
-        //populate dynamic checkbox with available groups
-        populateCheckBox();
+        
 
 
         //bootstrap validator fields/criteria
@@ -96,22 +109,40 @@
 
 
 
-    //function to create checkboxes from all existing groups in the firebase DB
+    //function to create checkboxes from groups available to user, or if admin - all groups in firebase DB
     function populateCheckBox() {
 
-        var groupRef = firebase.database().ref('groups/');
+        if(currentUser.isAdmin){
+            //admin can send announcement to any group
+            var groupRef = firebase.database().ref('groups/');
 
-        var checkboxIndex = 0;
+            var checkboxIndex = 0;
 
-        //query firebase group nodes and use 'name' to populate checkbox group
-        groupRef.orderByChild('name').on('child_added', function(snapshot) {
+            //query firebase group nodes and use 'name' to populate checkbox group
+            groupRef.orderByChild('name').on('child_added', function(snapshot) {
 
-            groups.push(snapshot.val());
+                groups.push(snapshot.val());
 
-            $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
-            checkboxIndex += 1;
-            groupNum++;
-        });
+                $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
+                checkboxIndex += 1;
+                groupNum++;
+            });
+
+        }
+        else{
+
+            //only populate the current user's groups
+            var checkboxIndex = 0;
+
+            currentUser.groups.forEach(function(group){
+                $("#groupCheckbox").append(groupHtmlFromObject(group, checkboxIndex));
+                checkboxIndex += 1;
+                groupNum++;
+
+            });
+        }
+
+        
 
     }
 
