@@ -1,11 +1,56 @@
 (function(){
 
-	var announcements = [];
+	var uniqueAnnouncements = {};
+	var uniqueAnnouncementsKeys = [];
+
 	var logoutButton = $('#logout_button');
 
 	var announcementModal;
 
+	var groupRefs = []
+
+	var currentUser;
+
+	var announcementsBaseRef = firebase.database().ref("announcements");
+
 	$(document).ready(function(){
+
+		firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                currentUser = getGlobalUser();
+                //populate dynamic checkbox with available groups
+
+                groupRefs.push("all/");
+				currentUser.groups.forEach(function(group){
+					groupRefs.push(group.id + "/");
+					// console.log(groupRefs);
+
+					
+				});
+
+				console.log("here");
+
+				groupRefs.forEach(function(subRef){
+					announcementsBaseRef.child(subRef).orderByChild("postDate").on("child_added", function(data){
+						var announcement = data.toJSON();
+						if(! uniqueAnnouncements.hasOwnProperty(announcement.id)){
+							console.log("uniqueAnnouncements changed!");
+							uniqueAnnouncements[announcement.id] = announcement;
+							uniqueAnnouncementsKeys = Object.keys(uniqueAnnouncements);
+							$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
+						}
+						// announcements.unshift(announcement);
+						
+						// console.log(Object.keys(uniqueAnnouncements));
+					});
+				});
+
+            } else {
+                // No user is signed in.
+                alert("Logging out!");
+                window.location.href = "login.html";
+            }
+        });
 
 		//when an announcement is clicked, set the modal data source to that announcement,
 		//then display it
@@ -31,13 +76,16 @@
 		});
 
 
-		//listen for current/new announcements for ALL users/groups
-		var announcementsRef = firebase.database().ref('announcements/').orderByChild('postDate');
+		
 
-		announcementsRef.on("child_added", function(data){
-			announcements.unshift(data.toJSON());
-			$('.announcements_list').prepend(generateAnnouncementFromTemplate(data.toJSON()));
-		});
+
+		// //listen for current/new announcements for ALL users/groups
+		// var announcementsRef = firebase.database().ref('announcements/').orderByChild('postDate');
+
+		// announcementsRef.on("child_added", function(data){
+		// 	announcements.unshift(data.toJSON());
+		// 	$('.announcements_list').prepend(generateAnnouncementFromTemplate(data.toJSON()));
+		// });
 
 	});
 
@@ -46,9 +94,17 @@
 
 	//Creates a new announcement card from a given accouncement
 	function generateAnnouncementFromTemplate(announcement){
+		//TODO: This was a sloppy fix for an issue where child_added was being called twice.
+			//the second call with only the announcement key set (other properties like sender were undefined)
+		if(!announcement.sender){
+			return;
+		}
+
+		var firstName = announcement.sender.firstName;
+		console.log(firstName);
 
 		//convert announcement author info into a simple spaced string
-		var authorName = announcement.sender.firstName + " " + announcement.sender.lastName;
+		var authorName = firstName + " " + announcement.sender.lastName;
         //set the priority class for the announcement card based on the integer priority level set
 		var priorityClass;
 		switch(parseInt(announcement.priority)){
@@ -88,17 +144,29 @@
 
 	//Sets the modal data source to the announcement at the selected position
 	function showModal(position){
-		var announcement = announcements[position];
+		var announcement = uniqueAnnouncements[uniqueAnnouncementsKeys[position]];
+		console.log(position);
+		console.log(announcement);
 
 		var groupList = "";
+		var groupListArr = [];
+		var announcementGroups = announcement.groups;
 
-		//FIXME: The following code should create a list of groups from the announcemnt groups array
+		for(index in announcementGroups){
+			groupListArr.push(announcementGroups[index].charAt(0).toUpperCase() + announcementGroups[index].slice(1));
+		}
+
+		groupListArr.sort();
+
+		groupList = groupListArr.join(", ");
+
+
+		console.log(groupList)
+
+		//FIXME: The following code should create a list of groups from the announcement groups array
 			//currently, it simply tries to get one group from the announcemen
 
-		if(announcement.groups){
-
-			groupList += announcement.groups[0].name;
-		}
+	
 		
 		announcementModal = `<div id="myModal" class="modal">
 							    <div class="modal-dialog">

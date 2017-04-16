@@ -4,6 +4,8 @@
 
     
 
+    
+    
     var groupNum = 1;
 
     var groups = [];
@@ -54,13 +56,15 @@
                     selectedGroups.push(groups[$(this).val()]);
                 });
 
-                //if no groups selected, default to all groups             
-                if (selectedGroups.length === 0) {
-                    $.each($("input[name='group']:not(:checked"), function() {
-                        console.log("reCheck");
-                        selectedGroups.push(groups[$(this).val()]);
-                    });
-                }
+                // //if no groups selected, default to all groups             
+                // if (selectedGroups.length === 0) {
+                //     $.each($("input[name='group']:not(:checked"), function() {
+                //         console.log("reCheck");
+                //         selectedGroups.push(groups[$(this).val()]);
+                //     });
+                // }
+
+                console.log(selectedGroups);
 
                 addAnnouncement(currentUser, title, message, priority, selectedGroups);
             }
@@ -123,6 +127,7 @@
             groupRef.orderByChild('name').on('child_added', function(snapshot) {
 
                 groups.push(snapshot.val());
+                console.log(snapshot.val());
 
                 $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
                 checkboxIndex += 1;
@@ -139,8 +144,9 @@
                 $("#groupCheckbox").append(groupHtmlFromObject(group, checkboxIndex));
                 checkboxIndex += 1;
                 groupNum++;
-
             });
+
+            groups = currentUser.groups;
         }
 
         
@@ -165,19 +171,41 @@
 
         alert("adding announcement");
 
-        var announcementsRef = firebase.database().ref('announcements/');
-        var newAnnouncementKey = announcementsRef.push().key;
-        var newAnnouncement = new Announcement(newAnnouncementKey, faculty, title, message, priority, groups);
+        var groupsRefs = [];
+        var groupNames = [];
+
+        if(!groups || groups.length < 1){
+            console.log("sending to all/");
+            groupsRefs.push("all");
+            groupNames.push("all");
+        }
+        else{
+            groups.forEach(function(group){
+                groupsRefs.push(group.id);
+                groupNames.push(group.name);
+            });
+        }
+
+        var announcementsBaseRef = firebase.database().ref('announcements/');
+        var newAnnouncementKey = announcementsBaseRef.push().key;
+        var newAnnouncement = new Announcement(newAnnouncementKey, faculty, title, message, priority, groupNames);
+
+
 
         var updates = {};
-        updates['/announcements/' + newAnnouncementKey] = newAnnouncement;
-        firebase.database().ref().update(updates).then(function() {
-            window.location.href = "announcements.html";
+
+        groupsRefs.forEach(function(ref){
+            updates[ref + "/" + newAnnouncementKey + "/"] = newAnnouncement;
+        });
+
+        announcementsBaseRef.update(updates).then(function() {
             $("#submitButton").prop('disabled', false);
+            window.location.href = "announcements.html";
         }, function(error) {
             alert("Failed to add announcement!");
             $("#submitButton").prop('disabled', false);
         });
+
     }
 
 }());
