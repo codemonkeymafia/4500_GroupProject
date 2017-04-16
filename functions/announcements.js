@@ -94,11 +94,23 @@
 
 		//FIXME: The following code should create a list of groups from the announcemnt groups array
 			//currently, it simply tries to get one group from the announcemen
-
-		if(announcement.groups){
-
-			groupList += announcement.groups[0].name;
+		console.log(announcement.groups);
+	
+		//build a string of associated groups for a particular announcement to display
+		var numGroups = Object.keys(announcement.groups).length;
+		
+		for(var grp = 1; grp <= numGroups; grp++){
+			
+			groupList += announcement.groups[grp-1].name;
+			
+			if(grp != numGroups){
+			 groupList += ", ";
+			}
+			if(grp % 5 === 0 ){
+				groupList += "</br>";
+			}
 		}
+		
 		
 		announcementModal = `<div id="myModal" class="modal">
 							    <div class="modal-dialog">
@@ -113,7 +125,7 @@
 							            <div class="modal-footer">
 							                <p>Posted by: ` + announcement.sender.firstName + " " + announcement.sender.lastName +  `</p>
 							                <p>On: ` + $.format.date(announcement.postDate || new Date(), "MMM dd, yyyy") + `</p>
-							                <p>To: ` + (groupList || "All") + `</p>
+							                <p>To: ` + (groupList) + `</p>
 							            </div>
 							        </div>
 							    </div>
