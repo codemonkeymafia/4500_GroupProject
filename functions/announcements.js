@@ -49,10 +49,9 @@
 
 		//convert announcement author info into a simple spaced string
 		var authorName = announcement.sender.firstName + " " + announcement.sender.lastName;
-
-		//set the priority class for the announcement card based on the integer priority level set
+        //set the priority class for the announcement card based on the integer priority level set
 		var priorityClass;
-		switch(announcement.priority){
+		switch(parseInt(announcement.priority)){
 			case 0:
 				priorityClass = "priority-low";
 				break;
