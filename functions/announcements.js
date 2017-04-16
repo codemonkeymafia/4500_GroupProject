@@ -1,7 +1,6 @@
 (function(){
 
 	var uniqueAnnouncements = {};
-	var uniqueAnnouncementsKeys = [];
 
 	var logoutButton = $('#logout_button');
 
@@ -36,7 +35,6 @@
 						if(! uniqueAnnouncements.hasOwnProperty(announcement.id)){
 							console.log("uniqueAnnouncements changed!");
 							uniqueAnnouncements[announcement.id] = announcement;
-							uniqueAnnouncementsKeys = Object.keys(uniqueAnnouncements);
 							$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
 						}
 						// announcements.unshift(announcement);
@@ -55,7 +53,7 @@
 		//when an announcement is clicked, set the modal data source to that announcement,
 		//then display it
 		$("body").delegate('.announcement', 'click', function () {
-		    $('body').append(showModal($(this).index()));
+		    $('body').append(showModal($(this).attr('id')));
 			$(announcementModal).modal('show');
 		});
 
@@ -127,12 +125,12 @@
 			//For some reason, when an announcement is added after the initial ones are loaded, firebase is notified of the change before the
 			//postDate property is set for that new announcement (it was undefined)
 
-		var announcementHTML = `<div class="announcement">
+		var announcementHTML = `<div class="announcement" id="` + announcement.id + `">
 									<div class="announcement-block">
       						 			<div class="announcement-heading">
       										<h5 class="announcement-title text-center ` + priorityClass + `">` + announcement.title + `</h5>
       										<p class="announcement-author text-left">` + authorName + `</p>
-      										<p class="announcement-date text-right">` + $.format.date(announcement.postDate || new Date(), "MMM dd, yyyy")  + `</p>
+      										<p class="announcement-date text-right">` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a")  + `</p>
       									</div>   
         								<hr>
        									<p class="announcement-message">` + announcement.message + `</p>
@@ -142,29 +140,26 @@
 	}
 
 
-	//Sets the modal data source to the announcement at the selected position
-	function showModal(position){
-		var announcement = uniqueAnnouncements[uniqueAnnouncementsKeys[position]];
-		console.log(position);
-		console.log(announcement);
+	//Sets the modal data source to the announcement in the hashmap with the given key
+	function showModal(key){
+		//find the announcement with the specified key
+		var announcement = uniqueAnnouncements[key];
 
-		var groupList = "";
 		var groupListArr = [];
 		var announcementGroups = announcement.groups;
 
+
+		//capitalize the name of each group in the array of group names, and store it in the array
 		for(index in announcementGroups){
 			groupListArr.push(announcementGroups[index].charAt(0).toUpperCase() + announcementGroups[index].slice(1));
 		}
 
+		//sort the list of announcement groups in alphabetical order
 		groupListArr.sort();
 
-		groupList = groupListArr.join(", ");
+		//convert array of alphabetized group names to a comma-separated string
+		var groupList = groupListArr.join(", ");
 
-
-		console.log(groupList)
-
-		//FIXME: The following code should create a list of groups from the announcement groups array
-			//currently, it simply tries to get one group from the announcemen
 
 	
 		
@@ -180,7 +175,7 @@
 							            </div>
 							            <div class="modal-footer">
 							                <p>Posted by: ` + announcement.sender.firstName + " " + announcement.sender.lastName +  `</p>
-							                <p>On: ` + $.format.date(announcement.postDate || new Date(), "MMM dd, yyyy") + `</p>
+							                <p>On: ` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a") + `</p>
 							                <p>To: ` + groupList + `</p>
 							            </div>
 							        </div>
