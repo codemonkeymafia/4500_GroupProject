@@ -70,7 +70,7 @@
 		  // ...
 		  alert("signin failed");
 		  console.log("signin failed");
-		  // $('#login_submit').prop('disabled', false);
+		  $('#login_submit').prop('disabled', false);
 		});
 		
 	}
