@@ -43,7 +43,6 @@
                 var priority = $("#announcemet_priority").val();
                 var title = $("#announcement_title").val();
                 var message = $("#announcement_message").val();
-                var user = new User(null, "Jeffery", "Calhoun", "jcd39@mail.umsl.edu", null, true, true, null, null);
 
 
                 //store checked boxes
@@ -61,7 +60,7 @@
                     });
                 }
 
-                addAnnouncement(user, title, message, priority, selectedGroups);
+                addAnnouncement(currentUser, title, message, priority, selectedGroups);
             }
         });
 
