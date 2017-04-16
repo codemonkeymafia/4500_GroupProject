@@ -181,7 +181,7 @@
 							            <div class="modal-footer">
 							                <p>Posted by: ` + announcement.sender.firstName + " " + announcement.sender.lastName +  `</p>
 							                <p>On: ` + $.format.date(announcement.postDate || new Date(), "MMM dd, yyyy") + `</p>
-							                <p>To: ` + (groupList || "All") + `</p>
+							                <p>To: ` + groupList + `</p>
 							            </div>
 							        </div>
 							    </div>
