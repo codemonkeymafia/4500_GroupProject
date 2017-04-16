@@ -163,6 +163,7 @@
 
 	
 		
+		
 		announcementModal = `<div id="myModal" class="modal">
 							    <div class="modal-dialog">
 							        <div class="modal-content">
@@ -175,8 +176,13 @@
 							            </div>
 							            <div class="modal-footer">
 							                <p>Posted by: ` + announcement.sender.firstName + " " + announcement.sender.lastName +  `</p>
+<<<<<<< HEAD
 							                <p>On: ` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a") + `</p>
 							                <p>To: ` + groupList + `</p>
+=======
+							                <p>On: ` + $.format.date(announcement.postDate || new Date(), "MMM dd, yyyy") + `</p>
+							                <p>To: ` + (groupList) + `</p>
+>>>>>>> 8a63b17d51ef0d8c0d5cad8f65c8375f98f81087
 							            </div>
 							        </div>
 							    </div>
