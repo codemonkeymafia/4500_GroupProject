@@ -1,17 +1,22 @@
 (function(){
 
 	var uniqueAnnouncements = {};
+	var todaysDate = new Date().getTime();
+	
+	var daysFromTodayToInclude = 14; //# days from current date to filter
 
 	// remove -- replaced with onclick in <a>
 	// var logoutButton = $('#logout_button');
 
 	var announcementModal;
 
-	var groupRefs = []
+	var groupRefs = [];
 
 	var currentUser;
 
+	//var announcementsBaseRef = firebase.database().ref("announcements");
 	var announcementsBaseRef = firebase.database().ref("announcements");
+	
 
 	$(document).ready(function(){
 
@@ -62,16 +67,20 @@
 						ks.forEach(function(key){
 							anns.push(uniqueAnnouncements[key]);
 						});
-						
+				
+					
 						anns.forEach(function(announcement){
+							//only display announcements from the last X # days
+							if(getDateDifference(announcement,todaysDate) <= daysFromTodayToInclude){
 							$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
+						}
 
 						});
 
 
 
 						//initial list loaded; now listen for new ones
-						console.log("listening for announcements to user's groups")
+						console.log("listening for announcements to user's groups");
 
 						groupRefs.forEach(function(subRef){
 							announcementsBaseRef.child(subRef).on("child_added", function(data){
@@ -128,6 +137,13 @@
 
 	});
 
+
+function getDateDifference(announcement,todaysDate){
+	
+	var annDate = new Date(announcement.postDate).getTime();
+	
+	return (todaysDate-annDate)/(24*3600*1000);
+}
 
 
 
@@ -190,7 +206,7 @@
 
 
 		//capitalize the name of each group in the array of group names, and store it in the array
-		for(index in announcementGroups){
+		for(var index in announcementGroups){
 			groupListArr.push(announcementGroups[index].charAt(0).toUpperCase() + announcementGroups[index].slice(1));
 		}
 
