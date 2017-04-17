@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <title>UMSL Music Department Web Application</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/index.css">
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -26,100 +26,62 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    
-    <!-- The style options here would need to be added to a CSS stylesheet. -->
-    <!-- First need to determine which are page specific, and which are project specific -->
-    <style>
-      .carousel-caption{
-        background: rgba(0,0,0,0.5);
-      }
 
-      @media (max-width: 550px) {
-     .big-container {
-         display: none;
-       }
-     }
-     @media (min-width: 550px) {
-       .small-container {
-         display: none;
-       }
-     }
-     /* Responsive iFrame */
-     .responsive-iframe-container {
-         position: relative;
-         padding-bottom: 56.25%;
-         padding-top: 30px;
-         height: 0;
-         overflow: hidden;
-     }
-     .responsive-iframe-container iframe,
-     .vresponsive-iframe-container object,
-     .vresponsive-iframe-container embed {
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100%;
-     }
-    </style>
+       <!--Firebase access for Logout -->
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase-database.js"></script>
+    <script>
+      // Initialize Firebase
+      // TODO: Replace with your project's customized code snippet
+      var config = {
+        apiKey: "AIzaSyAAiz-tSG6vKmKHlryHnkVXq0okNpS5Ga4",
+        authDomain: "musicapp4500.firebaseapp.com",
+        databaseURL: "https://musicapp4500.firebaseio.com",
+        projectId: "musicapp4500",
+        storageBucket: "musicapp4500.appspot.com",
+        messagingSenderId: "947399837764"
+      };
+      firebase.initializeApp(config);
+    </script>
 
 </head>
 
 <body>
 
-    <!-- Navigation -->
+     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- the container for bootstrap -->
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">UMSL Music Department</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
+                <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">UMSL Music Department</a>
+            </div><!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="announcements.html">Announcements</a>
                     </li>
                     <li>
-                        <a href="services.html">Calendar</a>
+                        <a href="calendar.html">Calendar</a>
                     </li>
                     <li>
                         <a href="contact.html">Contact</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other Pages <b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="full-width.html">Full Width Page</a>
-                            </li>
-                            <li>
-                                <a href="sidebar.html">Sidebar Page</a>
-                            </li>
-                            <li>
-                                <a href="faq.html">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="404.html">404</a>
-                            </li>
-                            <li>
-                                <a href="pricing.html">Pricing Table</a>
+                                <a href="adduser.html">Add User</a>
                             </li>
                         </ul>
                     </li>
+                    <li> <!-- TODO: BUG FIX: logout doesn't work on this page.-->
+                        <a id="logout_button" title="Logout" href="#" onclick="logout();return false;">Logout</a>
+                    </li>
                 </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
+            </div><!-- /.navbar-collapse -->
     </nav>
-
     <!-- Header Carousel -->
     <header id="myCarousel" class="carousel slide">
         <!-- Indicators -->
@@ -133,7 +95,7 @@
         <div class="carousel-inner">
             <div class="item active">
                  <img src="http://i1347.photobucket.com/albums/p720/the_total_jim/umsl_music_department_logo_zpsdnhrbwzh.jpg" width: "100%" height: "100%" class="img-responsive center-block">
-                <div class="carousel-caption">
+               <div class="carousel-caption">
                     <h2 id="carousel-1" >Caption 1</h2>
                     <p>Here is some text that can be changed.</p>
                 </div>
@@ -180,7 +142,7 @@
                     </div>
                     <div class="panel-body">
                         <p>Announcements from the Music Department can be found here.</p>
-                        <a href="#" class="btn btn-default">Head to Announcements</a>
+                        <a href="announcements.html" class="btn btn-default">Head to Announcements</a>
                     </div>
                 </div>
             </div>
@@ -191,7 +153,7 @@
                     </div>
                     <div class="panel-body">
                         <p>Check out the Music Department calendar to stay up to date on all events and performances.</p>
-                        <a href="#" class="btn btn-default">Head to the Calendar</a>
+                        <a href="calendar.html" class="btn btn-default">Head to the Calendar</a>
                     </div>
                 </div>
             </div>
@@ -202,7 +164,7 @@
                     </div>
                     <div class="panel-body">
                         <p>Need to find a faculty member? Check out the contact page.</p>
-                        <a href="#" class="btn btn-default">Head to Contacts</a>
+                        <a href="contact.html" class="btn btn-default">Head to Contacts</a>
                     </div>
                 </div>
             </div>
@@ -211,53 +173,9 @@
 
         <hr>
 
-        <!-- Features Section -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="page-header">University of Missouri - Saint Louis Music Department</h2>
-            </div>
-            <div class="col-md-6">
-                <p></p>
-                <ul>
-                    <li><strong>University of Missouri - Saint Louis</strong>
-                    </li>
-                    <li>1 University Blvd. </li>
-                    <li>St. Louis, MO 63121-4400 </li>
-                    <li>(314) 516-5980 </li>
-                    <li>1-888-GO-2-UMSL</li>
-                </ul>
-                <p>The Department of Music at the University of Missouri - St. Louis is committed to teaching, research/creativity, and public service. In addition to its role of advancing knowledge as part of a comprehensive research university, the Department of Music advances the University’s land grant tradition by enhancing the cultural life of the St. Louis metropolitan area, providing high quality and accessible educational experiences in music.</p>
-            </div>
-            <div class="col-md-6">
-                <img class="img-responsive" src="http://i1347.photobucket.com/albums/p720/the_total_jim/Quartet%20Rehearsal_zpszm1qujut.jpeg" alt="">
-            </div>
-        </div>
-
-        <!-- /.row -->
-
-        <hr>
-
-
-
-        <hr>
-
         <div class="row">
             <div class=" col-xs-12 col-md-4">
               <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FUMSLMusicDepartment%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-            </div>
-            <!-- Replacing this picture with a google calendar embed
-            <div class="col-md-8">
-              <img class="img-responsive" src="http://i1347.photobucket.com/albums/p720/the_total_jim/BandBannerCropped_zpszm3zvuwv.jpg" alt="">
-            </div>
-          -->
-            <!-- Here I addex two different calendars, it switches to the list view when it is in a small container, including mobile. -->
-            <div class="col-md-8">
-              <div class="responsive-iframe-container big-container">
-              <iframe src="https://calendar.google.com/calendar/embed?src=umslmusic%40gmail.com&ctz=America/Chicago" style="border-width:0" width="100%" height="650" frameborder="0" scrolling="no"></iframe>
-              </div>
-              <div class="responsive-iframe-container small-container">
-              <iframe src="https://calendar.google.com/calendar/embed?mode=AGENDA&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=umslmusic%40gmail.com&amp;color=%23B1440E&amp;ctz=America%2FChicago" style="border-width:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
-              </div>
             </div>
         </div>
 
@@ -291,8 +209,10 @@
     </div>
     <!-- /.container -->
 
+    <script src="./functions/globals.js"></script>
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
+
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>

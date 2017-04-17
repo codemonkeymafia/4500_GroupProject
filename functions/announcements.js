@@ -2,8 +2,8 @@
 
 	var uniqueAnnouncements = {};
 
-
-	var logoutButton = $('#logout_button');
+	// remove -- replaced with onclick in <a>
+	// var logoutButton = $('#logout_button');
 
 	var announcementModal;
 
@@ -97,12 +97,13 @@
          
 
 
-
+/* // remove - logout link in menu calls logout() directly.
 		//logout when the logout button is clicked
 		logoutButton.on('click', function(){
 			logout();
 			
 		});
+*/
 
 		//clicking the button to add new announcement takes user to create announcement page
 		$("#add_announcement_button").on('click', function(){

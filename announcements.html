@@ -12,6 +12,9 @@
    </script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
    </script>
+   <!-- for navigation -->
+   <script src="https://code.jquery.com/jquery-1.10.2.js">
+   </script>
    <script src="./js/jquery-dateFormat.min.js">
    </script>
    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
@@ -31,113 +34,108 @@
    </script><!-- this needs to be added to announcements stylesheet when style has been -->
    <!-- decided on -->
 
-   <style>
-       announcement_header {
-           font-family: 100% Arial, Helvetica, sans-serif;
-       }
-       .btn-default {
-           box-shadow: 1px 2px 5px #000000;
-           color: #ffffff;
-           background-color: #981E32;
-           border-color: #EAAB00;
-           margin: 0 auto;
-       }
-   </style>
+      <!-- the following css fails when moved to external .css -->
+   <style> 
+    .btn-default {
+      box-shadow: 1px 2px 5px #000000;
+      color: #ffffff;
+      background-color: #981E32;
+      border-color: #EAAB00;
+      margin: auto;
+    }
+    body{
+      margin-top: 60px;
+    }
+  </style>
 </head>
 <body>
 <div class="root">
 
 <!-- <div class="test">
-	<button id="logout_button" class="btn btn-default">Logout</button>
+  <button id="logout_button" class="btn btn-default">Logout</button>
 </div> -->
 
-	
-   <!-- Navigation -->
-   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <!-- the container for bootstrap -->
-      <div class="container">
-         <!-- Brand and toggle get grouped for better mobile display -->
-         <div class="navbar-header">
-            <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">UMSL Music Department</a>
-         </div><!-- Collect the nav links, forms, and other content for toggling -->
-         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-               <li>
-                  <a href="announcements.html">Announcements</a>
-               </li>
-               <li>
-                  <a href="services.html">Calendar</a>
-               </li>
-               <li>
-                  <a href="contact.html">Contact</a>
-               </li>
-               <li class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Other Pages <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                     <li>
-                        <a href="full-width.html">Full Width Page</a>
-                     </li>
-                     <li>
-                        <a href="sidebar.html">Sidebar Page</a>
-                     </li>
-                     <li>
-                        <a href="faq.html">FAQ</a>
-                     </li>
-                     <li>
-                        <a href="404.html">404</a>
-                     </li>
-                     <li>
-                        <a href="pricing.html">Pricing Table</a>
-                     </li>
-                  </ul>
-               </li>
-            </ul>
-         </div><!-- /.navbar-collapse -->
-      </div>
-   </nav>
-   <div class="container">
-      <!-- simple jumbotron to hold the department graphic. -->
-      <div class="jumbotron"><img alt="Music Department Logo" class="img-responsive" src="./images/umsl_music_department_logo.jpg"></div>
-      <div class="well" id="announcement_header">
-         <h2>Announcements</h2>
-      </div>
-      <div class="test">
-         <div class="btn-group">
-            <button class="btn btn-default" id="logout_button">Logout!</button> <button class="btn btn-default" id="add_announcement_button">New Announcement</button> <button class="btn btn-default" id="add_user_button">New User</button>
-         </div>
-      </div>
-   </div>
-   <div class="announcements_list">
+     <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- the container for bootstrap -->
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">UMSL Music Department</a>
+            </div><!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="announcements.html">Announcements</a>
+                    </li>
+                    <li>
+                        <a href="calendar.html">Calendar</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="adduser.html">Add User</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li> <!-- TODO: BUG FIX: logout doesn't work on this page.-->
+                        <a id="logout_button" title="Logout" href="#" onclick="logout();return false;">Logout</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+
       
-   </div>
-   <hr>
-   <!-- Return to top of page.  -->
-   <div class="well">
-      <div class="row">
-         <div class="col-md-8">
-            <p>Return to the top of the page.</p>
-         </div>
-         <div class="col-md-4">
-            <a class="btn btn-lg btn-default btn-block" href="#">Back to Top</a>
-         </div>
+  <div class="container">
+    <!-- simple jumbotron to hold the department graphic. -->
+    <div class="jumbotron"><img alt="Music Department Logo" class="img-responsive" src="./images/umsl_music_department_logo.jpg">
+    </div>
+     <div class="row">
+        <div class="col-lg-12">
+          <h1>Announcements</h1>
+        </div>
       </div>
-   </div>
-   <hr>
-   <div class="container">
+    <div class="well">
+    <div class="row">
+      <div class="col-md-4">
+        <button class="btn btn-lg btn-default btn-block" id="add_announcement_button">New Announcement</button> 
+      </div>
+    </div>
+    </div>
+    <div class="announcements_list">   
+    </div>
+    <hr>
+    <!-- Return to top of page.  -->
+    <div class="well">
+      <div class="row">
+        <div class="col-md-4">
+          <a class="btn btn-lg btn-default btn-block" href="#">Back to Top</a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="container">
       <!-- Footer -->
       <footer>
          <div class="row">
             <div class="col-lg-12">
-            <p>Copyright &copy; CodeMonkeyMafia 2017</p><img src="http://i1347.photobucket.com/albums/p720/the_total_jim/smallestLogoMonkey_zps0a0kyqjx.png"></div>
-         </div>
+              <p>Copyright &copy; CodeMonkeyMafia 2017</p><img src="http://i1347.photobucket.com/albums/p720/the_total_jim/smallestLogoMonkey_zps0a0kyqjx.png">
+            </div>
+          </div>
       </footer>
-
-    <script src="./functions/globals.js"></script>
-      <script src="./functions/userModel.js"></script>
-    <script src="./functions/groupModel.js"></script>
-    <script src="./functions/announcementModel.js"></script>
-    <script src="functions/announcements.js"></script>
-   </div>
+    </div>
   </div>
+
+  <script src="./functions/globals.js"></script>
+  <script src="./functions/userModel.js"></script>
+  <script src="./functions/groupModel.js"></script>
+  <script src="./functions/announcementModel.js"></script>
+  <script src="functions/announcements.js"></script>
+
 </body>
 </html>
