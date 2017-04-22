@@ -152,6 +152,10 @@
                 currentUser.groups.forEach(function(group){
                 	groupRefs.push(group.id);
                 });
+
+                firebase.database().ref().child("users").child(currentUser.id).child("seenAnnouncements").once("value", function(data){
+                	console.log(data.val());
+                });
             }
             else {
                 // No user is signed in.
