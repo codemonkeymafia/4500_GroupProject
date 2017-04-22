@@ -1,12 +1,10 @@
 (function(){
 
 	var uniqueAnnouncements = {};
+	var seenAnnouncements = {};
 	var todaysDate = new Date().getTime();
 	
 	var daysFromTodayToInclude = 14; //# days from current date to filter
-
-	// remove -- replaced with onclick in <a>
-	// var logoutButton = $('#logout_button');
 
 	var announcementModal;
 
@@ -26,7 +24,11 @@
 		//when an announcement is clicked, set the modal data source to that announcement,
 		//then display it
 		$(".root").delegate('.announcement', 'click', function () {
-			$('body').append(showModal($(this).attr('id')));
+			var thisID = $(this).attr('id');
+			console.log("thisID:" + thisID);
+			markAnnouncementAsSeen(thisID);
+			$('body').append(showModal(thisID));
+			$('span[id="' + thisID + '"]').remove();
 			$(announcementModal).modal('show');
 		});
 
@@ -51,7 +53,7 @@
 
 
 
-	//Creates a new announcement card from a given accouncement
+	//Creates a new announcement card from a given announcement
 	function generateTemplateFromAnnouncement(announcement){
 		//TODO: This was a sloppy fix for an issue where child_added was being called twice.
 			//the second call with only the announcement key set (other properties like sender were undefined)
@@ -83,7 +85,8 @@
 		var announcementHTML = `<div class="announcement" id="` + announcement.id + `">
 		<div class="announcement-block">
 		<div class="announcement-heading">
-		<h5 class="announcement-title text-center ` + priorityClass + `">` + announcement.title + `</h5>
+		<h5 class="announcement-title text-center ` + priorityClass + `">` + announcement.title + `
+		<span class="badge badge-default" id="` + announcement.id + `">New</span></h5>
 		<p class="announcement-author text-left">` + authorName + `</p>
 		<p class="announcement-date text-right">` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a")  + `</p>
 		</div>   
@@ -134,6 +137,7 @@
 		</div>
 		</div>`;
 
+		console.log(announcement.id);
 		return announcementModal;
 
 	}
@@ -212,6 +216,10 @@
 				}
 			});
 		});
+	}
+
+	function markAnnouncementAsSeen(announcementKey){
+		firebase.database().ref().child("users").child(currentUser.id).child("seenAnnouncements").push(announcementKey).set(true);
 	}
 
 }());
