@@ -198,6 +198,8 @@
                 console.log("attempting to add user to " + group.name);
                 addUserToGroup(newUser, group);
             });
+
+            window.location.href = "addUser.html";
         });
         // var updates = {};
         // updates['/users/' + newUserKey] = user;
