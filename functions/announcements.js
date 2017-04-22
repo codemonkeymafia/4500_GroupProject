@@ -13,22 +13,24 @@
 	var currentUser;
 
 	var announcementsBaseRef = firebase.database().ref("announcements");
+
+
 	
 
 	$(document).ready(function(){
 
 		loadCurrentUserInfo();
-		getAnnouncementsForUser();
+
+
 
 
 		//when an announcement is clicked, set the modal data source to that announcement,
 		//then display it
 		$(".root").delegate('.announcement', 'click', function () {
 			var thisID = $(this).attr('id');
-			console.log("thisID:" + thisID);
 			markAnnouncementAsSeen(thisID);
 			$('body').append(showModal(thisID));
-			$('span[id="' + thisID + '"]').remove();
+			$('span[id="' + thisID + '"]').fadeOut('fast');
 			$(announcementModal).modal('show');
 		});
 
@@ -82,12 +84,15 @@
         	break;
         }
 
+        var hasSeen =  (seenAnnouncements && (seenAnnouncements.hasOwnProperty(announcement.id) === true));
+
 		var announcementHTML = `<div class="announcement" id="` + announcement.id + `">
 		<div class="announcement-block">
 		<div class="announcement-heading">
-		<h5 class="announcement-title text-center ` + priorityClass + `">` + announcement.title + `
-		<span class="badge badge-default" id="` + announcement.id + `">New</span></h5>
-		<p class="announcement-author text-left">` + authorName + `</p>
+		<h5 class="announcement-title text-center ` + priorityClass + `">` + announcement.title
+		+ ( ! hasSeen ? `<span class="badge badge-default" id="` + announcement.id + `">New</span>` : ``)
+		+ `</h5>`
+		 +`<p class="announcement-author text-left">` + authorName + `</p>
 		<p class="announcement-date text-right">` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a")  + `</p>
 		</div>   
 		<hr>
@@ -137,7 +142,6 @@
 		</div>
 		</div>`;
 
-		console.log(announcement.id);
 		return announcementModal;
 
 	}
@@ -153,9 +157,7 @@
                 	groupRefs.push(group.id);
                 });
 
-                firebase.database().ref().child("users").child(currentUser.id).child("seenAnnouncements").once("value", function(data){
-                	console.log(data.val());
-                });
+                getSeenAnnouncements(getAnnouncementsForUser);
             }
             else {
                 // No user is signed in.
@@ -216,14 +218,23 @@
 				var announcement = data.toJSON();
 				if(! uniqueAnnouncements.hasOwnProperty(announcement.id)){
 					uniqueAnnouncements[announcement.id] = announcement;
-					$('.announcements_list').prepend(generateAnnouncementFromTemplate(announcement));
+					$('.announcements_list').prepend(generateTemplateFromAnnouncement(announcement));
 				}
 			});
 		});
 	}
 
+	function getSeenAnnouncements(callback){
+		firebase.database().ref().child("users").child(currentUser.id).child("seenAnnouncements").once("value", function(data){
+        	seenAnnouncements = data.val();
+        	if(callback){
+				callback();
+			}
+        });
+	}
+
 	function markAnnouncementAsSeen(announcementKey){
-		firebase.database().ref().child("users").child(currentUser.id).child("seenAnnouncements").push(announcementKey).set(true);
+		firebase.database().ref().child("users").child(currentUser.id).child("seenAnnouncements").child(announcementKey).set(true);
 	}
 
 }());
