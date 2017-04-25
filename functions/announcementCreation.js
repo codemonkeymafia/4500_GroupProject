@@ -55,7 +55,7 @@
         //when the submit button is pressed for the new announcements form,
         //get the data and try to add new announcement to firebase
         $("#announcementEntry_form").on("submit", function(e) {
-            if (!e.isDefaultPrevented()) {
+       
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 $("#submitButton").prop('disabled', true);
@@ -71,17 +71,8 @@
                     selectedGroups.push(groups[$(this).val()]);
                 });
 
-                // //if no groups selected, default to all groups             
-                // if (selectedGroups.length === 0) {
-                //     $.each($("input[name='group']:not(:checked"), function() {
-                //         console.log("reCheck");
-                //         selectedGroups.push(groups[$(this).val()]);
-                //     });
-                // }
-
-
                 addAnnouncement(currentUser, title, message, priority, selectedGroups);
-            }
+
         });
 
         
