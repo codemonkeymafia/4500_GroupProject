@@ -2,6 +2,10 @@
 
     var currentUser;
 
+    
+
+    
+    
     var groupNum = 1;
 
     var groups = [];
@@ -13,10 +17,11 @@
                 currentUser = getGlobalUser();
                 //populate dynamic checkbox with available groups
 
-                if (!currentUser.isFaculty) {
+                if( !currentUser.isFaculty ){
                     alert("only faculty can access this page");
                     window.location.href = "announcements.html";
-                } else {
+                }
+                else{
                     populateCheckBox();
                 }
 
@@ -26,7 +31,8 @@
                 window.location.href = "login.html";
             }
         });
-
+        
+        
         //keep submit button disabled unless requirements met
         $('#announcementEntry_form').on('status.field.bv', function(e, data) {
             formIsValid = true;
@@ -41,7 +47,7 @@
             }
         });
 
-        //when the back button is clicked, go back to announcements page    
+         //when the back button is clicked, go back to announcements page    
         $("#back_button").on("click", function() {
             window.location.href = "announcements.html";
         });
@@ -49,30 +55,41 @@
         //when the submit button is pressed for the new announcements form,
         //get the data and try to add new announcement to firebase
         $("#announcementEntry_form").on("submit", function(e) {
+            if (!e.isDefaultPrevented()) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                $("#submitButton").prop('disabled', true);
+                var priority = $("#announcemet_priority").val();
+                var title = $("#announcement_title").val();
+                var message = $("#announcement_message").val();
 
-            e.preventDefault();
-            var priority = $("#announcemet_priority").val();
-            var title = $("#announcement_title").val();
-            var message = $("#announcement_message").val();
+
+                //store checked boxes
+                var selectedGroups = new Array();
+                $.each($("input[name='group']:checked"), function() {
+                    // console.log("checked");
+                    selectedGroups.push(groups[$(this).val()]);
+                });
+
+                // //if no groups selected, default to all groups             
+                // if (selectedGroups.length === 0) {
+                //     $.each($("input[name='group']:not(:checked"), function() {
+                //         console.log("reCheck");
+                //         selectedGroups.push(groups[$(this).val()]);
+                //     });
+                // }
 
 
-            //store checked boxes
-            var selectedGroups = new Array();
-            $.each($("input[name='group']:checked"), function() {
-                // console.log("checked");
-                selectedGroups.push(groups[$(this).val()]);
-            });
-
-            addAnnouncement(currentUser, title, message, priority, selectedGroups);
-
+                addAnnouncement(currentUser, title, message, priority, selectedGroups);
+            }
         });
 
-
+        
 
 
         //bootstrap validator fields/criteria
         $('#announcementEntry_form').bootstrapValidator({
-            //container: '#messages',
+            container: '#messages',
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
@@ -114,7 +131,7 @@
     //function to create checkboxes from groups available to user, or if admin - all groups in firebase DB
     function populateCheckBox() {
 
-        if (currentUser.isAdmin) {
+        if(currentUser.isAdmin){
             //admin can send announcement to any group
             var groupRef = firebase.database().ref('groups/');
 
@@ -130,12 +147,13 @@
                 groupNum++;
             });
 
-        } else {
+        }
+        else{
 
             //only populate the current user's groups
             var checkboxIndex = 0;
 
-            currentUser.groups.forEach(function(group) {
+            currentUser.groups.forEach(function(group){
                 $("#groupCheckbox").append(groupHtmlFromObject(group, checkboxIndex));
                 checkboxIndex += 1;
                 groupNum++;
@@ -144,7 +162,7 @@
             groups = currentUser.groups;
         }
 
-
+        
 
     }
 
@@ -168,11 +186,12 @@
         var groupsRefs = [];
         var groupNames = [];
 
-        if (!groups || groups.length < 1) {
+        if(!groups || groups.length < 1){
             groupsRefs.push("all");
             groupNames.push("all");
-        } else {
-            groups.forEach(function(group) {
+        }
+        else{
+            groups.forEach(function(group){
                 groupsRefs.push(group.id);
                 groupNames.push(group.name);
             });
@@ -186,7 +205,7 @@
 
         var updates = {};
 
-        groupsRefs.forEach(function(ref) {
+        groupsRefs.forEach(function(ref){
             updates[ref + "/" + newAnnouncementKey + "/"] = newAnnouncement;
         });
 
