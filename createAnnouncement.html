@@ -37,116 +37,111 @@
     <!-- not sure why the navbar is hiding the title on this page. 
         SLOPPY FIX with CSS-->
     <style>
-        body{
+        body {
             margin-top: 60px;
         }
     </style>
 </head>
 
 <body>
-<div class="root">
-     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <!-- the container for bootstrap -->
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">UMSL Music Department</a>
-            </div><!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="announcements.html">Announcements</a>
-                    </li>
-                    <li>
-                        <a href="calendar.html">Calendar</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="adduser.html">Add User</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li> <!-- TODO: BUG FIX: logout doesn't work on this page.-->
-                        <a id="logout_button" title="Logout" href="#" onclick="logout();return false;">Logout</a>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div>
-    </nav>
-    
-<!-- Page Content -->
-    <div class="container">
-<!-- Features Section -->
-        <div class="row">
-            <div class="col-lg-12">
-                  <h1>Create an Announcement</h1>
+    <div class="root">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- the container for bootstrap -->
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">UMSL Music Department</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="announcements.html">Announcements</a>
+                        </li>
+                        <li>
+                            <a href="calendar.html">Calendar</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">Contact</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="adduser.html">Add User</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <!-- TODO: BUG FIX: logout doesn't work on this page.-->
+                            <a id="logout_button" title="Logout" href="#" onclick="logout();return false;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
+        </nav>
 
-            <form id="announcementEntry_form" class="form-horizontal" method="post">
-                <label class="col-md-3 control-label">Message Priority</label>
-                <select id="announcemet_priority">
+        <!-- Page Content -->
+        <div class="container">
+            <!-- Features Section -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Create an Announcement</h1>
+                </div>
+
+                <form id="announcementEntry_form" class="form-horizontal" method="post">
+                    <label class="col-md-3 control-label">Message Priority</label>
+                    <select id="announcemet_priority">
                     <option value="2">Mandatory</option>
                     <option value="1" selected>Normal</option>
                     <option value="0">Low</option>
                 </select>
-                <br>
-                <br>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Title</label>
                     <br>
-                    <div class="col-md-6">
-                        <input type="text" id="announcement_title" name="announcement_title" class="form-control" required="">
-                    </div>
-                </div>
-                <br>
-                <br>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Announcement</label>
                     <br>
-                    <div class="col-md-6">
-                        <textarea class="form-control" id="announcement_message" name="announcement_message" class="form-control"></textarea>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Title</label>
+                        <br>
+                        <div class="col-md-6">
+                            <input class="form-control input-lg" type="text" id="announcement_title" name="announcement_title">
+                        </div>
                     </div>
-                </div>
-                <br>
-                <br>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Announcement</label>
+                        <br>
+                        <div class="col-md-6">
+                            <textarea class="form-control input-lg" id="announcement_message" name="announcement_message"></textarea>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
 
-                <br>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Available Distribution Groups</label>
-                    <div class="col-md-6">
-                        <div id="groupCheckbox" name="groupCheckbox" class="checkbox_group"></div>
+                    <br>
+                    <div class="form-group2">
+                        <label class="col-md-3 control-label">Available Distribution Groups</label>
+                        <div class="col-md-6">
+                            <div id="groupCheckbox" name="groupCheckbox" class="checkbox_group"></div>
+                        </div>
                     </div>
-                </div>
-                <br>
-                <br>
-                <!--error messages put here-->
-                <div class="form-group">
+                    <br>
+                    <br>
                     <div class="col-md-9 col-md-offset-3">
-                        <div id="messages"></div>
+                        <input class="btn btn-success submit-button" type="submit" disabled>
                     </div>
-                </div>
-                <br>
-                <br>
-                <div class="form-group">
-                    <div class="col-md-9 col-md-offset-3">
-                        <button id="submitButton" type="submit" class="btn btn-default">Submit</button>
-                    </div>
-                </div>
-            </form>
+
+                </form>
+            </div>
         </div>
-    </div>
 
-    <script src="./functions/globals.js"></script>
-    <script src="./functions/userModel.js"></script>
-    <script src="./functions/groupModel.js"></script>
-    <script src="./functions/announcementModel.js"></script>
-    <script src="functions/announcementCreation.js"></script>
-</div>
+        <script src="./functions/globals.js"></script>
+        <script src="./functions/userModel.js"></script>
+        <script src="./functions/groupModel.js"></script>
+        <script src="./functions/announcementModel.js"></script>
+        <script src="functions/announcementCreation.js"></script>
+    </div>
 </body>
+
 </html>
