@@ -1,48 +1,37 @@
-.announcement {
+.directory-item{
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     border-radius: 8px;
-    width: 90%;
+    width: 98%;
     margin: 20px auto;
 }
-
-.announcement-author, .announcement-date{
-	display: inline-block;
-	width: 49%;
+.directory-contact{
+    width: 90%;
+    margin: 0 auto;
 }
 
-/* .announcement-author{
-	float: left;
-} */
-
-/* .announcement */
+.directory-faculty{
+	display: inline-block;
+	width: 49%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
 
 /* On mouse-over, add a deeper shadow */
-.announcement:hover {
+.directory-item:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 /* Add some padding inside the announcement container */
-.announcement .container {
+.directory .container {
     padding: 2px 16px;
 }
 
-.announcement-message, .announcement-heading{
+.directory-info, .directory-heading{
 	padding: 2px 8px;
 }
 
-.announcement hr{
+.directory hr{
 	margin: 2px;
-}
-
-.priority-high{
-    color:  red;
-}
-
-.priority-medium{
-    color: green;
-}
-.priority-low{
-
 }

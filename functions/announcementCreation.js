@@ -31,6 +31,21 @@
                 window.location.href = "login.html";
             }
         });
+        
+        
+        //keep submit button disabled unless requirements met
+        $('#announcementEntry_form').on('status.field.bv', function(e, data) {
+            formIsValid = true;
+            $('.form-group', $(this)).each(function() {
+                formIsValid = formIsValid && $(this).hasClass('has-success');
+            });
+
+            if (formIsValid) {
+                $('.submit-button', $(this)).attr('disabled', false);
+            } else {
+                $('.submit-button', $(this)).attr('disabled', true);
+            }
+        });
 
          //when the back button is clicked, go back to announcements page    
         $("#back_button").on("click", function() {
@@ -40,7 +55,7 @@
         //when the submit button is pressed for the new announcements form,
         //get the data and try to add new announcement to firebase
         $("#announcementEntry_form").on("submit", function(e) {
-            if (!e.isDefaultPrevented()) {
+       
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 $("#submitButton").prop('disabled', true);
@@ -56,17 +71,8 @@
                     selectedGroups.push(groups[$(this).val()]);
                 });
 
-                // //if no groups selected, default to all groups             
-                // if (selectedGroups.length === 0) {
-                //     $.each($("input[name='group']:not(:checked"), function() {
-                //         console.log("reCheck");
-                //         selectedGroups.push(groups[$(this).val()]);
-                //     });
-                // }
-
-
                 addAnnouncement(currentUser, title, message, priority, selectedGroups);
-            }
+
         });
 
         

@@ -93,7 +93,7 @@
 		+ ( ! hasSeen ? `<span class="badge badge-default" id="` + announcement.id + `">New</span>` : ``)
 		+ `</h5>`
 		 +`<p class="announcement-author text-left">` + authorName + `</p>
-		<p class="announcement-date text-right">` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a")  + `</p>
+		<p class="announcement-date text-right">` + $.format.toBrowserTimeZone(announcement.postDate, "MMM dd, yyyy - h:mm a")  + `</p>
 		</div>   
 		<hr>
 		<p class="announcement-message">` + announcement.message + `</p>
@@ -135,7 +135,7 @@
 		</div>
 		<div class="modal-footer">
 		<p>Posted by: ` + announcement.sender.firstName + " " + announcement.sender.lastName +  `</p>
-		<p>On: ` + $.format.date(announcement.postDate, "MMM dd, yyyy - h:mm a") + `</p>
+		<p>On: ` + $.format.toBrowserTimeZone(announcement.postDate, "MMM dd, yyyy - h:mm a") + `</p>
 		<p>To: ` + groupList + `</p>
 		</div>
 		</div>
@@ -168,6 +168,7 @@
 	}
 
 	function getAnnouncementsForUser(){
+		console.log("Getting announcements for user");
 		var groupsFound = 0;
 
 		announcementsBaseRef.on("child_added", function(data){
@@ -201,7 +202,6 @@
 						}
 
 					});
-
 
 					//initial list loaded; now listen for new ones
 					console.log("listening for announcements to user's groups");

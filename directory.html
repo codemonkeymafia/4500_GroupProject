@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+   <meta content="width=device-width, initial-scale=1" name="viewport">
+   <meta charset="utf-8">
+   <meta content="IE=edge" http-equiv="X-UA-Compatible">
+   <title>Directory</title>
+   <link href="./styles/styles.css" rel="stylesheet">
+   <link href="./styles/directory.css" rel="stylesheet" type="text/css">
+   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <!-- for navigation -->
+
+   </script>
+   <script src="./js/jquery-dateFormat.min.js">
+   </script>
+   <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
+   </script>
+   <script>
+         // Initialize Firebase
+         // TODO: Replace with your project's customized code snippet
+         var config = {
+           apiKey: "AIzaSyAAiz-tSG6vKmKHlryHnkVXq0okNpS5Ga4",
+           authDomain: "musicapp4500.firebaseapp.com",
+           databaseURL: "https://musicapp4500.firebaseio.com",
+           projectId: "musicapp4500",
+           storageBucket: "musicapp4500.appspot.com",
+           messagingSenderId: "947399837764"
+         };
+         firebase.initializeApp(config);
+   </script>
+
+      <!-- the following css fails when moved to external .css -->
+   <style> 
+    .btn-default {
+      box-shadow: 1px 2px 5px #000000;
+      color: #ffffff;
+      background-color: #981E32;
+      border-color: #EAAB00;
+      margin: auto;
+    }
+    body{
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+<div class="root">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- the container for bootstrap -->
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button> <a class="navbar-brand" href="index.html">UMSL Music Department</a>
+            </div><!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a id="announcement_button" title="Announcements" href="announcements.html">Announcements</a>
+                    </li>
+                    <li>
+                        <a id="calendar_button" title="Calendar" href="calendar.html">Calendar</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Contact<b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <a id="department-contact_button" title="Department Contact" href="contact.html">Department</a>
+                          </li>
+                          <li>
+                            <a id="faculty-contact_button" title="Faculty Contact" href="directory.html">Faculty</a>
+                          </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Users<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="addUser.html">Add User</a>
+                            </li>
+                            <li>
+                                <a href="searchUser.html">Find User</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a id="login_button" title="Login" href="login.html">Login</a>
+                            </li>
+                            <li> <!-- TODO: BUG FIX: logout doesn't work on this page.-->
+                                <a id="logout_button" title="Logout" href="#" onclick="logout();return false;">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li>
+                        <a id="help_button" title="Help" href="help.html">Help</a>
+                    </li>-->
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+
+      
+  <div class="container">
+    <!-- simple jumbotron to hold the department graphic. -->
+    <div class="jumbotron"><img alt="Music Department Logo" class="img-responsive" src="./images/umsl_music_department_logo.jpg">
+    </div>
+     <div class="row">
+        <div class="col-lg-12">
+          <h1>Directory</h1>
+        </div>
+      </div>
+   <!--
+    
+    <div class="row"> 
+      <div class="col-md-4">
+        <button class="btn btn-lg btn-default btn-block" id="add_announcement_button">New Announcement</button> 
+      </div>
+    </div>
+    </div>
+    -->
+    <div class="directory_list">
+    <div class="well">Listed in alphabetical order by last name</div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Kurt Baldwin</div>
+        <div class="directory-jobtitle">
+        Cello<br>
+        Strings<br>
+        Arianna String Quartet
+        </div>
+        <div class="directory-contact"> 
+        Email: baldwink@umsl.edu<br>
+        Phone: 314-516- 4257
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Donita Bauer</div>
+        <div class="directory-jobtitle">
+        Woodwinds <br>
+        Bassoon
+        </div>
+      </div>
+
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Lisa Blackmore</div>
+        <div class="directory-jobtitle">
+        Trumpet<br>
+        Brass
+        </div>
+        <div class="directory-contact"> 
+        Email: mlblackmore@centurytel.net 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Gary Brandes</div>
+        <div class="directory-jobtitle">
+        Chairperson<br> 
+        Ensemble Conductor: Band<br>
+        Music Education<br>
+        Conducting
+        </div>
+        <div class="directory-contact"> 
+        Email: brandesg@umsl.edu<br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Whitney Cairns</div>
+        <div class="directory-jobtitle">
+        Music Theory and Composition
+        </div>
+        <div class="directory-contact"> 
+        Email: cairnsw@umsl.edu <br>
+        Phone: 314-516- 5891 
+        </div>
+      </div>
+
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Zachary Cairns</div>
+        <div class="directory-jobtitle">
+        Coordinator of Music Theory Studies<br>
+        Music Theory and Composition
+        </div>
+        <div class="directory-contact"> 
+        Email: cairnsz@umsl.edu <br>
+        Phone: 314-516- 5999 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Kim Cowell</div>
+        <div class="directory-jobtitle">
+        Music Education
+        </div>
+        <div class="directory-contact"> 
+        Email: cowellk@umsl.edu <br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Billie Derham</div>
+        <div class="directory-jobtitle">
+        Piano<br>
+        Keyboard
+        </div>
+        <div class="directory-contact"> 
+        Email: derhamb@umsl.edu<br>
+        Phone: 314-516- 6479 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Phil Dunlap</div>
+        <div class="directory-jobtitle">
+        Music Education<br>
+        Jazz Studies
+        </div>
+        <div class="directory-contact">
+        Email: dunlapp@umsl.edu <br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Gail Fleming</div>
+        <div class="directory-jobtitle">
+        Music Education
+        </div>
+        <div class="directory-contact"> 
+        Email: flemingg@umsl.edu 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Kevin Gianino</div>
+        <div class="directory-jobtitle">
+        Jazz Percussion<br>
+        Jazz Studies
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Steve Hanrahan</div>
+        <div class="directory-jobtitle">
+        Horn<br>
+        Brass
+        </div>
+        <div class="directory-contact"> 
+        Email: hanrahanst@umsl.edu 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Barbara Harbach</div>
+        <div class="directory-jobtitle">
+        Harpsichord and Organ<br>
+        Keyboard<br>
+        Music History and Literature<br>
+        Music Theory and Composition
+        </div>
+        <div class="directory-contact"> 
+        Email: harbachb@umsl.edu<br>
+        Phone: 314-516- 7776
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Aurelia Hartenberger</div>
+        <div class="directory-jobtitle">
+        Music Education
+        </div>
+        <div class="directory-contact"> 
+        Email: hartenbergera@umsl.edu <br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Rick Haydon</div>
+        <div class="directory-jobtitle">
+        Jazz Guitar<br>
+        Jazz Studies
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Jim Henry</div>
+        <div class="directory-jobtitle">
+        Ensemble Conductor: Choir <br>
+        Conducting
+        </div>
+        <div class="directory-contact"> 
+        Email: henryjam@umsl.edu 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Matthew Henry</div>
+        <div class="directory-jobtitle">
+        Ensemble Conductor: Percussion<br>
+        Percussion
+        </div>
+        <div class="directory-contact"> 
+        Email: henryma@umsl.edu<br>
+        Phone: 314-516- 7970 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Ann Homann-Mottl</div>
+        <div class="directory-jobtitle">
+        Oboe<br>
+        Woodwinds
+        </div>
+        <div class="directory-contact"> 
+        Email: music@umsl.edu<br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Paula Kasica</div>
+        <div class="directory-jobtitle">
+        Flute<br>
+        Woodwinds
+        </div>
+        <div class="directory-contact">
+        Email: music@umsl.edu<br>
+        Phone: 314-516- 5980
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Ken Kehner</div>
+        <div class="directory-jobtitle">
+        Jazz Piano<br>
+        Jazz Combos<br>
+        Jazz Improvisation<br>
+        Jazz Keyboard Harmony<br>
+        Jazz Studies
+        </div>
+        <div class="directory-contact"> 
+        Email: kehnerk@umsl.edu <br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Terri Langerak</div>
+        <div class="directory-jobtitle">
+        Harp<br>
+        Strings
+        </div>
+        <div class="directory-contact"> 
+        Email: terrilangerak@mac.com<br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Jason Mallory</div>
+        <div class="directory-jobtitle">
+        Vocal Arts<br>
+        Music History and Literature
+        </div>
+        <div class="directory-contact"> 
+        Email: MalloryJD@umsl.edu 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Troy Marble</div>
+        <div class="directory-jobtitle">
+        Low Brass<br>
+        Brass
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Stella Markou</div>
+        <div class="directory-jobtitle">
+        Ensemble Conductor: Opera Theatre<br>
+        Director of Vocal Studies
+        </div>
+        <div class="directory-contact"> 
+        Email: markous@umsl.edu<br> 
+        Phone: 314-516- 5947 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> John McGrosso</div>
+        <div class="directory-jobtitle">
+        Violin<br>
+        Strings<br>
+        Arianna String Quartet
+        </div>
+        <div class="directory-contact"> 
+        Email: mcgrossoj@umsl.edu <br>
+        Phone: 314-516- 4917 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Joanna Mendoza</div>
+        <div class="directory-jobtitle">
+        Viola<br>
+        Strings<br>
+        Arianna String Quartet<br>
+        Music History and Literature
+        </div>
+        <div class="directory-contact"> 
+        Email: joannamendoza@hotmail.com <br>
+        Phone: 314-516- 4918
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Jennifer Mishra</div>
+        <div class="directory-jobtitle">
+        Music Education
+        </div>
+        <div class="directory-contact"> 
+        Email: mishraj@umsl.edu <br>
+        Phone: 314-516- 5984 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Stephen Morton</div>
+        <div class="directory-jobtitle">
+        Vocal Arts
+        </div>
+        <div class="directory-contact"> 
+        Email: scmacc@yahoo.com <br>
+        Phone: 314-302- 5564 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Neil Ostercamp</div>
+        <div class="directory-jobtitle">
+        Saxophone<br>
+        Woodwinds
+        </div>
+        <div class="directory-contact"> 
+        Email: OstercampN@umsl.edu
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> James Richards </div>
+        <div class="directory-jobtitle">
+        Ensemble Conductor: Orchestra
+        </div>
+        <div class="directory-contact"> 
+        Email: jamesrichards@umsl.edu<br>
+        Phone: 314-516- 4571 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Alan Rosenkoetter</div>
+        <div class="directory-jobtitle">
+        Guitar<br>
+        Strings
+        </div>
+        <div class="directory-contact"> 
+        Email: rosenkoettera@umsl.edu<br>
+        Email: acrosenk@artsci.wustl.edu <br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Julia Sakharova</div>
+        <div class="directory-jobtitle">
+        Violin<br>
+        Strings<br>
+        Arianna String Quartet
+        </div>
+        <div class="directory-contact"> 
+        Email: sakharovaj@umsl.edu <br>
+        Phone: 314-516- 4258 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Michael Smith</div>
+        <div class="directory-jobtitle">
+        Music Education
+        </div>
+        <div class="directory-contact"> 
+        Email: smithmv@umsl.edu <br>
+        Phone: 314-516- 6607 </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Sue Stubbs</div>
+        <div class="directory-jobtitle">
+        Double Bass<br>
+        Strings
+        </div>
+        <div class="directory-contact"> 
+        Email: music@umsl.edu <br>
+        Phone: 314-516- 5980 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Joel Vanderheyden</div>
+        <div class="directory-jobtitle">
+        Jazz Saxophone<br>
+        Jazz Combos<br>
+        Jazz Improvisation<br>
+        Jazz Studies
+        </div>
+        <div class="directory-contact"> 
+        Email: vanderheydenj@umsl.edu 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Alla Voskoboynikova</div>
+        <div class="directory-jobtitle">
+        Director of Keyboard Studies<br>
+        Keyboard
+        </div>
+        <div class="directory-contact"> 
+        Email: voskoboynikovaa@umsl.edu<br>
+        Phone: 314-516- 4198 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Tom Walker</div>
+        <div class="directory-jobtitle">
+        Trombone<br>
+        Brass
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Jim Widner</div>
+        <div class="directory-jobtitle">
+        Ensemble Conductor: Jazz<br>
+        Director of Jazz Studies<br>
+        Jazz Ensemble<br>
+        Jazz Bass<br>
+        Jazz Pedagogy
+        </div>
+        <div class="directory-contact"> 
+        Email: widnerjl@umsl.edu <br>
+        Phone: 314-516- 4235 
+        </div>
+      </div>
+
+      <div class="directory-item">
+        <div class="directory-faculty"> Jeanine York-Garesche</div>
+        <div class="directory-jobtitle">
+        Clarinet<br>
+        Woodwinds
+        </div>
+        <div class="directory-contact"> 
+        Email: music@umsl.edu <br>
+        Phone: 314-516- 5980 
+        </div>
+      </div> 
+    </div>
+    <hr>
+    <!-- Return to top of page.  -->
+    <div class="well">
+      <div class="row">
+        <div class="col-md-4">
+          <a class="btn btn-lg btn-default btn-block" href="#">Back to Top</a>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="container">
+      <!-- Footer -->
+      <footer>
+         <div class="row">
+            <div class="col-lg-12">
+              <p>Copyright &copy; CodeMonkeyMafia 2017</p><img src="http://i1347.photobucket.com/albums/p720/the_total_jim/smallestLogoMonkey_zps0a0kyqjx.png">
+            </div>
+          </div>
+      </footer>
+    </div>
+  </div>
+
+  <script src="./functions/globals.js"></script>
+  <script src="./functions/userModel.js"></script>
+  <script src="./functions/groupModel.js"></script>
+  <script src="functions/directory.js"></script>
+
+</body>
+</html>
