@@ -50,7 +50,7 @@
 </head>
 <body>
 <div class="root">
-     <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- the container for bootstrap -->
         <div class="container">
@@ -61,25 +61,25 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="announcements.html">Announcements</a>
+                        <a id="announcement_button" title="Announcements" href="announcements.html">Announcements</a>
                     </li>
                     <li>
-                        <a href="calendar.html">Calendar</a>
+                        <a id="calendar_button" title="Calendar" href="calendar.html">Calendar</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Contact<b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
                           <li>
-                            <a href="contact.html">Department</a>
+                            <a id="department-contact_button" title="Department Contact" href="contact.html">Department</a>
                           </li>
                           <li>
-                            <a href="directory.html">Faculty</a>
+                            <a id="faculty-contact_button" title="Faculty Contact" href="directory.html">Faculty</a>
                           </li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage<b class="caret"></b></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Manage Users<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="addUser.html">Add User</a>
@@ -89,9 +89,20 @@
                             </li>
                         </ul>
                     </li>
-                    <li> <!-- TODO: BUG FIX: logout doesn't work on this page.-->
-                        <a id="logout_button" title="Logout" href="#" onclick="logout();return false;">Logout</a>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Account<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a id="login_button" title="Login" href="login.html">Login</a>
+                            </li>
+                            <li> <!-- TODO: BUG FIX: logout doesn't work on this page.-->
+                                <a id="logout_button" title="Logout" href="#" onclick="logout();return false;">Logout</a>
+                            </li>
+                        </ul>
                     </li>
+                    <!--<li>
+                        <a id="help_button" title="Help" href="help.html">Help</a>
+                    </li>-->
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>
