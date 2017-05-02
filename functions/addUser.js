@@ -100,7 +100,9 @@
             var user = new User(null, firstName, lastName, email, selectedGroups, isFaculty, isAdmin, (isFaculty ? phone : undefined), (isFaculty ? office : undefined));
 
             registerUser(user);
-
+            //location.reload(true);
+             window.location.href  = "addUser.html";
+            
 
         });
 
@@ -217,17 +219,22 @@
             var checkboxIndex = 0;
 
             //query firebase group nodes and use 'name' to populate checkbox group
-            groupRef.orderByChild('name').on('child_added', function(snapshot) {
-
-                groups.push(snapshot.val());
-
-                $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val(), checkboxIndex));
-                checkboxIndex += 1;
-                groupNum++;
-
-            });
+                groupRef.orderByChild('name').once('value').then(function(snapshot){
+                console.log("inside pop checkbox");
+                console.log(snapshot.val());
+                
+                //loop through Object array and append groups
+                    Object.keys(snapshot.val()).forEach(function(key) {
+                        
+                        $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val()[key], checkboxIndex));
+                         checkboxIndex += 1;
+                        groupNum++;
+                        //console.log(key, snapshot.val()[key].name);
+                     });
+                });
 
         } else {
+            console.log("not admin");
 
             //only populate the current user's groups
             var checkboxIndex = 0;
@@ -245,7 +252,8 @@
 
     //create checkbox input dynamically and use 'data-group' attribute to store group name for DB record downstream
     function groupHtmlFromObject(fbGroup, index) {
-
+        console.log(fbGroup.name);
+       
         var html = '<input type = "checkbox" id = "group' + groupNum + '"class = "checkboxGroups" name = "group" value="' + index + '"';
         html += 'data-group="' + fbGroup.name + '">';
         html += '<label>' + fbGroup.name + '</label></br>';
