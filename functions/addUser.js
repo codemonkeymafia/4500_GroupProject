@@ -39,37 +39,6 @@
 
         $("#facultyInfo").hide();
 
-
-        //keep submit button disabled unless requirements met
-        $('#addUserForm').on('status.field.bv', function(e, data) {
-            formIsValid = true;
-            //$('.form-group', $(this)).each(function() {
-            $('.form-group').each(function() {
-                formIsValid = formIsValid && $(this).hasClass('has-success');
-            });
-
-
-
-            if (formIsValid) {
-
-                $(".submit-button").attr('disabled', false);
-
-                console.log("valid");
-            } else {
-
-                $(".submit-button").attr('disabled', true);
-                console.log("invalid");
-            }
-        });
-
-
-
-        //when the back button is clicked, go back to announcements page    
-        $("#back_button").on("click", function() {
-            window.location.href = "announcements.html";
-
-        });
-
         //when the submit button is pressed for the new announcements form,
         //get the data and try to add new announcement to firebase
         $("#addUserForm").on("submit", function(e) {
@@ -87,7 +56,7 @@
 
             var selectedGroups = new Array();
             $.each($("input[name='group']:checked"), function() {
-                // console.log("checked");
+                console.log("checked");
                 selectedGroups.push(groups[$(this).val()]);
                 // or you can do something to the actual checked checkboxes by working directly with  'this'
                 // something like $(this).hide() (only something useful, probably) :P
@@ -97,14 +66,52 @@
             var phone = $("#phone-areaCode").val() + $("#phone-prefix").val() + $("#phone-suffix").val();
             var office = $("#office").val();
 
+            console.log(selectedGroups);
+
             var user = new User(null, firstName, lastName, email, selectedGroups, isFaculty, isAdmin, (isFaculty ? phone : undefined), (isFaculty ? office : undefined));
 
+            console.log(user);
             registerUser(user);
             //location.reload(true);
-             window.location.href  = "addUser.html";
+             // window.location.href  = "addUser.html";
             
 
         });
+
+    
+
+
+        //keep submit button disabled unless requirements met
+        $('#addUserForm').on('status.field.bv', function(e, data) {
+            formIsValid = true;
+            //$('.form-group', $(this)).each(function() {
+            $('.form-group').each(function() {
+                formIsValid = formIsValid && $(this).hasClass('has-success');
+            });
+
+
+
+            if (formIsValid) {
+
+                $(".submit-button").attr('disabled', false);
+
+                // console.log("valid");
+            } else {
+
+                $(".submit-button").attr('disabled', true);
+                // console.log("invalid");
+            }
+        });
+
+
+
+        //when the back button is clicked, go back to announcements page    
+        $("#back_button").on("click", function() {
+            window.location.href = "announcements.html";
+
+        });
+
+        
 
         $("#isFaculty").on("change", function() {
             $("#facultyInfo").toggle();
@@ -220,11 +227,11 @@
 
             //query firebase group nodes and use 'name' to populate checkbox group
                 groupRef.orderByChild('name').once('value').then(function(snapshot){
-                console.log("inside pop checkbox");
-                console.log(snapshot.val());
-                
+                                
                 //loop through Object array and append groups
                     Object.keys(snapshot.val()).forEach(function(key) {
+
+                        groups.push(snapshot.val()[key]);
                         
                         $("#groupCheckbox").append(groupHtmlFromObject(snapshot.val()[key], checkboxIndex));
                          checkboxIndex += 1;
@@ -252,7 +259,7 @@
 
     //create checkbox input dynamically and use 'data-group' attribute to store group name for DB record downstream
     function groupHtmlFromObject(fbGroup, index) {
-        console.log(fbGroup.name);
+        // console.log(fbGroup.name);
        
         var html = '<input type = "checkbox" id = "group' + groupNum + '"class = "checkboxGroups" name = "group" value="' + index + '"';
         html += 'data-group="' + fbGroup.name + '">';
@@ -270,6 +277,7 @@
     //Creates a user with specified email and randomly generated password in firebase,  then sends password reset link to that user's email
     function registerUser(user) {
         var password = generateRandomPassword();
+        
 
         firebase.auth().createUserWithEmailAndPassword(user.email, password).then(function(newFIRUser) {
 
@@ -281,7 +289,7 @@
             var errorCode = error.code;
             var errorMessage = error.message;
             // ...
-            console.log(errorMessage);
+            console.log(error);
         });
 
     }
@@ -319,7 +327,7 @@
             var selectedGroups = newUser.groups;
 
             selectedGroups.forEach(function(group) {
-                console.log("attempting to add user to " + group.name);
+                // console.log("attempting to add user to " + group.name);
                 addUserToGroup(newUser, group);
             });
 
@@ -337,7 +345,7 @@
 
 
         groupUsersRef.push(user.id).then(function() {
-            // console.log(user.firstName + "added to " + group.name);
+            console.log(user.firstName + "added to " + group.name);
         });
     }
 
