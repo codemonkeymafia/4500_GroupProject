@@ -4,6 +4,21 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+/*
+ *  CS 4500 Introduction to the Software Engineering Profession
+ *  Keith W. Miller
+ *  UMSL Music Department Announcement Application
+ *  Code Monkey Mafia
+ *  Amanda Rawls - Group Leader
+ *  Jeffery Calhoun
+ *  Stefan Rothermich
+ *  James Steimel
+ *  
+ *  Standard bootstrap.css file, will need to be kept up to date with original 
+ *  MIT licensed repository.
+ */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
