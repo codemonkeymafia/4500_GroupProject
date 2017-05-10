@@ -1,3 +1,16 @@
+/*
+ *  CS 4500 Introduction to the Software Engineering Profession
+ *  Keith W. Miller
+ *  UMSL Music Department Announcement Application
+ *  Code Monkey Mafia
+ *  Amanda Rawls - Group Leader
+ *  Jeffery Calhoun
+ *  Stefan Rothermich
+ *  James Steimel
+ *  
+ *  Javascript to handle login
+ */
+
 (function(){
 
 	//hide the logout button if the user isn't already signed in
