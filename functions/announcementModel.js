@@ -1,4 +1,17 @@
-	function Announcement(id, faculty, title, message, priority, groups){
+/*
+ *  CS 4500 Introduction to the Software Engineering Profession
+ *  Keith W. Miller
+ *  UMSL Music Department Announcement Application
+ *  Code Monkey Mafia
+ *  Amanda Rawls - Group Leader
+ *  Jeffery Calhoun
+ *  Stefan Rothermich
+ *  James Steimel
+ *  
+ *  Javascript model for Announcement Class
+ */
+
+function Announcement(id, faculty, title, message, priority, groups){
 
 
 		this.id = id || "";

@@ -1,3 +1,16 @@
+/*
+ *  CS 4500 Introduction to the Software Engineering Profession
+ *  Keith W. Miller
+ *  UMSL Music Department Announcement Application
+ *  Code Monkey Mafia
+ *  Amanda Rawls - Group Leader
+ *  Jeffery Calhoun
+ *  Stefan Rothermich
+ *  James Steimel
+ *  
+ *  Javascript for global user and logout.
+ */
+
 //signs user out of application, and redirects to login page
 	function logout(){
 		firebase.auth().signOut().then(function() {

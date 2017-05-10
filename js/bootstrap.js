@@ -4,6 +4,19 @@
  * Licensed under the MIT license
  */
 
+/*
+ *  CS 4500 Introduction to the Software Engineering Profession
+ *  Keith W. Miller
+ *  UMSL Music Department Announcement Application
+ *  Code Monkey Mafia
+ *  Amanda Rawls - Group Leader
+ *  Jeffery Calhoun
+ *  Stefan Rothermich
+ *  James Steimel
+ *  
+ *  Standard bootstrap.js file, will need to be kept up to date with MIT bootstrap repository
+ */
+
 if (typeof jQuery === 'undefined') {
   throw new Error('Bootstrap\'s JavaScript requires jQuery')
 }
