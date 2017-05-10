@@ -1,3 +1,17 @@
+
+/*
+ *  CS 4500 Introduction to the Software Engineering Profession
+ *  Keith W. Miller
+ *  UMSL Music Department Announcement Application
+ *  Code Monkey Mafia
+ *  Amanda Rawls - Group Leader
+ *  Jeffery Calhoun
+ *  Stefan Rothermich
+ *  James Steimel
+ *  
+ *  CSS styling for createAnnouncements.html
+ */
+
 #announcementEntry_form{
 	width: 100%;
 	margin: 0 10px 0 10px;
