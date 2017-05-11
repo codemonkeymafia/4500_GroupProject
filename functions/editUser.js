@@ -30,7 +30,7 @@
 
 
 
-        //form submission**TODO****
+        //form submission, edit or delete depending on which button pressed
         $("#editUserForm").on("submit", function(e) {
             
             e.preventDefault();
@@ -86,7 +86,7 @@
 
 
 
-        //form validation
+        //form validation using bootstrap validator
         $('#editUserForm').bootstrapValidator({
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',

@@ -45,7 +45,7 @@
     });
 
     //*******Functions******************
-    //populate list box with users from DB
+    //populate list box with users from DB (lastname firstname)
     function populateListBox() {
         var fullName = "";
         var userNum = 1;

@@ -9,6 +9,9 @@ Stefan Rothermich
 James Steimel
 
 addUser.html - Page for adding user.
+This page can be used by faculty to add student user accounts, or by an admin to add faculty accounts.
+Faculty user information is only visible if the user has admin privileges
+Bootstrap validator plugin used for form validation
 
 ***********************************************************************-->
 
@@ -164,16 +167,16 @@ addUser.html - Page for adding user.
                             <fieldset>
                                 <legend>Faculty Info:</legend>
                                 <label>
-															
-																		Phone: ( <div class = "form-group2"><input type="text" class="form-control input-sm" id="phone-areaCode" name="phone-areaCode" placeholder="xxx" ></div> )
-														
-																		<div class = "form-group2">
-																		<input type="text" class="form-control input-sm" id="phone-prefix" name="phone-prefix" placeholder="xxx" > -
-																		</div>
-																		<div class = "form-group2">
-																		<input type="text" class="form-control input-sm" id="phone-suffix" name="phone-suffix" placeholder="xxxx">
-																		</div>
-																		</label>
+						
+									Phone: ( <div class = "form-group2"><input type="text" class="form-control input-sm" id="phone-areaCode" name="phone-areaCode" placeholder="xxx" ></div> )
+					
+									<div class = "form-group2">
+									<input type="text" class="form-control input-sm" id="phone-prefix" name="phone-prefix" placeholder="xxx" > -
+									</div>
+									<div class = "form-group2">
+									<input type="text" class="form-control input-sm" id="phone-suffix" name="phone-suffix" placeholder="xxxx">
+									</div>
+									</label>
                                 <br>
                                 <div class="form-group2">
                                     <label> Office: <input type="text" class="form-control input-sm" id="office" name="office" value="" placeholder="123 Example Building, Room 000"></label>

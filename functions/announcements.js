@@ -35,8 +35,6 @@
 		loadCurrentUserInfo();
 
 
-
-
 		//when an announcement is clicked, set the modal data source to that announcement,
 		//then display it
 		$(".root").delegate('.announcement', 'click', function () {

@@ -14,10 +14,6 @@
 (function() {
 
     var currentUser;
-
-    
-
-    
     
     var groupNum = 1;
 
@@ -87,8 +83,6 @@
                 addAnnouncement(currentUser, title, message, priority, selectedGroups);
 
         });
-
-        
 
 
         //bootstrap validator fields/criteria
@@ -182,7 +176,6 @@
 
 
 
-
     //Creates a new announcement in Firebase
     function addAnnouncement(faculty, title, message, priority, groups) {
 
@@ -204,7 +197,6 @@
         var announcementsBaseRef = firebase.database().ref('announcements/');
         var newAnnouncementKey = announcementsBaseRef.push().key;
         var newAnnouncement = new Announcement(newAnnouncementKey, faculty, title, message, priority, groupNames);
-
 
 
         var updates = {};
