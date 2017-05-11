@@ -21,7 +21,15 @@
 	  	//read user info from database and store in session storage
 	  	firebase.database().ref("users/" + user.uid).once("value").then(function(snapshot){
 
-	  		setGlobalUser(snapshot.val());
+	  		if(snapshot.val() == undefined){
+		  		//user authenticated, but no profile entry in database. Delete user, revoking authentication credentials
+
+		  		alert("Your credentials are no longer valid; your account will be deleted!");
+		  		deleteUserAuth(user);
+		  	}
+	  		else{
+	  			setGlobalUser(snapshot.val());
+	  		}
 	  	});
 
 	  } else {

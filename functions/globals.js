@@ -56,3 +56,11 @@
 			logout();
 		}
 	}
+
+	//deletes given user from firebase authentication database
+	function deleteUserAuth(user){
+		console.log("Deleting user auth!");
+		if(user != undefined){
+			user.delete();
+		}
+	}
